@@ -1,0 +1,147 @@
+{
+  "products": [
+  {
+    "id": "1",
+    "name": "Sony WH-1000XM5",
+    "slug": "sony-wh-1000xm5",
+    "brand": "Sony",
+    "category": "wireless",
+    "price": 29999,
+    "currency": "INR",
+    "stock": 15,
+    "images": [
+      "https://d1ncau8tqf99kp.cloudfront.net/converted/103364_original_local_1200x1050_v3_converted.webp"
+    ],
+    "description": "Industry-leading noise canceling headphones with up to 30 hours battery."
+  },
+  {
+    "id": "2",
+    "name": "Boat Rockerz 550",
+    "slug": "boat-rockerz-550",
+    "brand": "boAt",
+    "category": "wireless",
+    "price": 1999,
+    "currency": "INR",
+    "stock": 50,
+    "images": [
+      "https://m.media-amazon.com/images/I/61gYxcIGjvL._SX522_.jpg"
+    ],
+    "description": "Affordable wireless over-ear headphones with immersive sound."
+  },
+  {
+    "id": "3",
+    "name": "JBL Tune 760NC",
+    "slug": "jbl-tune-760nc",
+    "brand": "JBL",
+    "category": "wireless",
+    "price": 7499,
+    "currency": "INR",
+    "stock": 25,
+    "images": [
+      "https://m.media-amazon.com/images/I/71TvdUf4kyL._SX522_.jpg"
+    ],
+    "description": "Lightweight, foldable headphones with active noise cancelling and deep bass."
+  },
+  {
+    "id": "4",
+    "name": "Bose QuietComfort 45",
+    "slug": "bose-quietcomfort-45",
+    "brand": "Bose",
+    "category": "wireless",
+    "price": 29990,
+    "currency": "INR",
+    "stock": 10,
+    "images": [
+      "https://m.media-amazon.com/images/I/31n8zJ5mBDL._SX300_SY300_QL70_FMwebp_.jpg"
+    ],
+    "description": "Premium noise-cancelling headphones with balanced sound and all-day comfort."
+  },
+  {
+    "id": "5",
+    "name": "Sennheiser HD 450BT",
+    "slug": "sennheiser-hd-450bt",
+    "brand": "Sennheiser ",
+    "category": "wireless",
+    "price": 8990,
+    "currency": "INR",
+    "stock": 20,
+    "images": [
+      "https://m.media-amazon.com/images/I/61h8NTXn5oL._UF1000,1000_QL80_.jpg"
+    ],
+    "description": "Wireless headphones with deep dynamic bass, Bluetooth 5.0, and 30-hour battery."
+  },
+  {
+    "id": "6",
+    "name": "Apple AirPods Max",
+    "slug": "apple-airpods-max",
+    "brand": "Apple",
+    "category": "wireless",
+    "price": 59900,
+    "currency": "INR",
+    "stock": 8,
+    "images": [
+      "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/airpods-max-select-202409-starlight_FV1?wid=976&hei=916&fmt=jpeg&qlt=90&.v=azQxRkVJKzd6V3J0aGNqWFhLMzBmdWd1NjlYUXFPTDZEK2xySGJScW1PS1Rpbjg5MjlaRWkwN0JTZEtNR2p3b2dmcFJCOTlLWlREUEJzL3lTN2VnL0cvVnNUQWxFNHNrME94a1pxdUNOU29FM01jakdGSHhMVXhHQ21YeXBIKzU"
+    ],
+    "description": "Over-ear headphones with high-fidelity audio, computational sound, and spatial audio."
+  },
+  {
+    "id": "7",
+    "name": "Skullcandy Crusher Evo",
+    "slug": "skullcandy-crusher-evo",
+    "brand": "Skullcandy",
+    "category": "wireless",
+    "price": 13999,
+    "currency": "INR",
+    "stock": 18,
+    "images": [
+      "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcSGhNDyBudvbHfqxY3zzRwxg6ZpGf_2TgFkHQ1BXhVmoyavvyHBT6nuvgtLsxVYa9_XEiPjJnfXSBKQ-wo7M9B6nYRbaIawS2g6YpHTTWcJ"
+    ],
+    "description": "Wireless headphones with adjustable sensory bass and 40 hours of battery life."
+  },
+  {
+    "id": "8",
+    "name": "OneOdio Pro-50",
+    "slug": "oneodio-pro-50",
+    "brand": "OneOdio",
+    "category": "wired",
+    "price": 3499,
+    "currency": "INR",
+    "stock": 30,
+    "images": [
+      "https://m.media-amazon.com/images/I/71nT-y33zyL._SX679_.jpg"
+    ],
+    "description": "Wired studio headphones with 50mm drivers and professional sound quality."
+  },
+  {
+    "id": "9",
+    "name": "AKG K371",
+    "slug": "akg-k371",
+    "brand": "AKG",
+    "category": "wired",
+    "price": 11490,
+    "currency": "INR",
+    "stock": 12,
+    "images": [
+      "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcSY_yAR5ezKIpPZD-JgmT8cviBpwCB1d-uzg0XEokP_gH95J0ZXKebXgaBxXBcKf689Ra4wiTdwgamuty7G5iB2tg8l9IwHrshaR9r4nVhDxj0V_hzWpOMTBg"
+    ],
+    "description": "Professional studio headphones tuned for accuracy with oval earcups."
+  },
+  {
+    "id": "10",
+    "name": "Anker Soundcore Life Q30",
+    "slug": "anker-soundcore-life-q30",
+    "brand": "Anker",
+    "category": "wireless",
+    "price": 7999,
+    "currency": "INR",
+    "stock": 22,
+    "images": [
+      "https://m.media-amazon.com/images/I/31JvFCUXHZL._SX300_SY300_QL70_FMwebp_.jpg"
+    ],
+    "description": "Hybrid active noise cancelling headphones with 40 hours playtime and Hi-Res audio."
+  }
+]
+,
+  "users": [],
+  "orders": []
+}
