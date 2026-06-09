@@ -1,136 +1,176 @@
-import React, { useState } from "react";
-import useApi from "../api/Api";
-import { FaPlay } from "react-icons/fa";
-import { motion } from "framer-motion";
+import React, { useState, useEffect, useContext } from "react";
+import { FaPlay, FaShoppingCart, FaInfoCircle } from "react-icons/fa";
+import { motion, AnimatePresence } from "framer-motion";
 import { slideRight } from "../utility/Animation";
 import { HiArrowCircleLeft, HiArrowCircleRight } from "react-icons/hi";
+import { Link, useNavigate } from 'react-router-dom';
+import api from "../api/axios";
+import { API_ROUTES } from "../api/routes";
+import { AppContext } from "../../pages/context";
 
 function Hero() {
-  const { product1 } = useApi();
+  const navigate = useNavigate();
+  const { addToCart, isAuthenticated } = useContext(AppContext);
+  const [products, setProducts] = useState([]);
   const [currslide, setCurrslide] = useState(0);
+  const [loading, setLoading] = useState(true);
+  const [cartAdding, setCartAdding] = useState(null);
+
+  useEffect(() => {
+    const fetchHeroProducts = async () => {
+      try {
+        setLoading(true);
+        // Get all products and take the first few for the slideshow
+        const res = await api.get(API_ROUTES.USER_ALL_PRODUCTS + '?limit=5');
+        if (res.data && res.data.status === 200) {
+          setProducts(res.data.data || []);
+        }
+      } catch (err) {
+        console.error("Hero products fetch failed", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchHeroProducts();
+  }, []);
 
   const prevslide = () => {
-    setCurrslide(currslide === 0 ? product1.length - 1 : currslide - 1);
+    setCurrslide(currslide === 0 ? products.length - 1 : currslide - 1);
   };
 
   const nextslide = () => {
-    setCurrslide(currslide === product1.length - 1 ? 0 : currslide + 1);
+    setCurrslide(currslide === products.length - 1 ? 0 : currslide + 1);
   };
 
+  const handleAddToCart = async (productId) => {
+    if (!isAuthenticated) {
+      navigate('/Login');
+      return;
+    }
+    try {
+      setCartAdding(productId);
+      await addToCart(productId, 1);
+      alert("Added to cart successfully!");
+    } catch (err) {
+      alert(err.message || "Failed to add to cart");
+    } finally {
+      setCartAdding(null);
+    }
+  };
+
+  if (loading) {
+    return (
+      <div className="w-full h-[500px] flex items-center justify-center bg-[#0b0c10]">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-amber-500"></div>
+      </div>
+    );
+  }
+
+  if (products.length === 0) {
+    return null;
+  }
+
   return (
-    <div className="w-full flex justify-center">
+    <div className="w-full flex justify-center bg-[#0b0c10] py-6 sm:py-10">
       <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="relative overflow-hidden rounded-xl lg:rounded-2xl">
+        <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-[#1c1d24] to-[#121319] border border-white/5 shadow-2xl">
+          
           {/* Slider Container */}
-          <div className="relative h-[500px] sm:h-[600px] md:h-[700px] lg:h-[650px]">
-            {product1.map((item, index) => (
+          <div className="relative h-[550px] sm:h-[600px] md:h-[550px] lg:h-[500px]">
+            {products.map((item, index) => (
               <div
                 key={item.id}
-                className={`absolute top-0 left-0 w-full h-full transition-all duration-500 ease-in-out ${
-                  index === currslide ? "opacity-100 z-10" : "opacity-0 z-0"
+                className={`absolute top-0 left-0 w-full h-full transition-all duration-700 ease-in-out flex items-center ${
+                  index === currslide ? "opacity-100 z-10 scale-100" : "opacity-0 z-0 scale-95 pointer-events-none"
                 }`}
-                style={{
-                  transform: `translateX(${(index - currslide) * 100}%)`,
-                }}
               >
                 {/* Content Grid */}
-                <div className="w-full h-full grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8">
+                <div className="w-full h-full grid grid-cols-1 md:grid-cols-2 gap-8 items-center px-6 sm:px-12 py-10">
+                  
                   {/* Text Content */}
-                  <div className="flex flex-col justify-center items-center lg:items-start text-center lg:text-left p-4 sm:p-6 md:p-8 lg:p-10 order-2 lg:order-1">
-                    <div className="max-w-md lg:max-w-lg xl:max-w-xl space-y-4 sm:space-y-6">
-                      <motion.p
-                        variants={slideRight(0.4)}
-                        initial="hidden"
-                        animate={index === currslide ? "visible" : "hidden"}
-                        className="text-black uppercase font-semibold text-sm sm:text-base"
-                      >
-                        100% Satisfaction Guarantee
-                      </motion.p>
-                      
-                      <motion.h1
-                        variants={slideRight(0.6)}
-                        initial="hidden"
-                        animate={index === currslide ? "visible" : "hidden"}
-                        className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold text-black leading-tight"
-                      >
+                  <div className="flex flex-col justify-center text-center md:text-left order-2 md:order-1 space-y-4 sm:space-y-6">
+                    <div>
+                      <span className="inline-block bg-amber-500/10 text-amber-500 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-widest mb-3">
+                        {item.category}
+                      </span>
+                      <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white leading-tight">
                         {item.name}
-                      </motion.h1>
-                      
-                      <motion.p
-                        variants={slideRight(0.8)}
-                        initial="hidden"
-                        animate={index === currslide ? "visible" : "hidden"}
-                        className="text-gray-600 text-base sm:text-lg"
-                      >
-                        {item.description}
-                      </motion.p>
+                      </h1>
+                    </div>
+                    
+                    <p className="text-gray-400 text-sm sm:text-base line-clamp-3 leading-relaxed">
+                      {item.desc || item.description}
+                    </p>
 
-                      {/* Buttons */}
-                      <motion.div
-                        variants={slideRight(1)}
-                        initial="hidden"
-                        animate={index === currslide ? "visible" : "hidden"}
-                        className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center lg:justify-start items-center mt-4 sm:mt-6"
+                    <div className="flex items-baseline justify-center md:justify-start gap-3">
+                      <span className="text-3xl font-black text-amber-500">₹{item.price}</span>
+                      {item.offerprice > 0 && (
+                        <span className="text-lg text-gray-500 line-through">₹{item.offerprice}</span>
+                      )}
+                    </div>
+
+                    {/* Action Buttons */}
+                    <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start items-center">
+                      <button
+                        onClick={() => handleAddToCart(item.id)}
+                        disabled={cartAdding === item.id}
+                        className="w-full sm:w-auto px-8 py-3 bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-black font-bold text-sm sm:text-base rounded-full shadow-lg hover:shadow-amber-500/20 transition transform hover:-translate-y-0.5 active:translate-y-0 flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
                       >
-                        <button className="primery-btn w-full sm:w-auto px-6 py-3 text-sm sm:text-base">
-                          ADD TO CART
-                        </button>
-                        <button className="flex justify-center items-center gap-2 font-semibold text-sm sm:text-base w-full sm:w-auto">
-                          <span className="w-8 h-8 sm:w-10 sm:h-10 bg-blue-300 rounded-full flex justify-center items-center flex-shrink-0">
-                            <FaPlay className="text-white text-xs sm:text-sm" />
-                          </span>
-                          CHECK IT OUT
-                        </button>
-                      </motion.div>
+                        <FaShoppingCart />
+                        {cartAdding === item.id ? "Adding..." : "ADD TO CART"}
+                      </button>
+                      
+                      <Link
+                        to={`/product/${item.id}`}
+                        className="w-full sm:w-auto px-8 py-3 bg-white/5 hover:bg-white/10 text-white font-semibold text-sm sm:text-base rounded-full border border-white/10 hover:border-white/20 transition text-center flex items-center justify-center gap-2"
+                      >
+                        <FaInfoCircle />
+                        DETAILS
+                      </Link>
                     </div>
                   </div>
 
                   {/* Image */}
-                  <div className="flex justify-center items-center p-4 sm:p-6 md:p-8 order-1 lg:order-2">
-                    <motion.img
-                      initial={{ opacity: 0, x: 200 }}
-                      animate={
-                        index === currslide
-                          ? { opacity: 1, x: 0 }
-                          : { opacity: 0, x: 200 }
-                      }
-                      transition={{ type: "spring", stiffness: 100, delay: 0.2 }}
-                      src={item.images[0]}
+                  <div className="flex justify-center items-center order-1 md:order-2 h-48 sm:h-64 md:h-80 lg:h-96 relative">
+                    <div className="absolute w-48 h-48 sm:w-64 sm:h-64 bg-amber-500/5 rounded-full blur-3xl -z-10"></div>
+                    <img
+                      src={item.images && item.images.length > 0 ? item.images[0] : "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?q=80&w=600&auto=format&fit=crop"}
                       alt={item.name}
-                      className="w-48 h-48 sm:w-64 sm:h-64 md:w-80 md:h-80 lg:w-96 lg:h-96 xl:w-[500px] xl:h-[500px] object-contain"
+                      className="max-h-40 sm:max-h-56 md:max-h-72 lg:max-h-80 w-auto object-contain drop-shadow-[0_20px_50px_rgba(245,158,11,0.2)] hover:scale-105 transition-transform duration-500"
                     />
                   </div>
+
                 </div>
               </div>
             ))}
           </div>
 
           {/* Navigation Buttons */}
-          <div className="absolute inset-0 flex justify-between items-center px-2 sm:px-4 lg:px-6 z-20">
+          <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 flex justify-between items-center px-4 z-20 pointer-events-none">
             <button 
               onClick={prevslide} 
-              className="p-2 sm:p-3 bg-white/80 hover:bg-white rounded-full shadow-lg transition-all hover:scale-110"
+              className="p-2 sm:p-3 bg-[#15161b]/80 hover:bg-amber-500 hover:text-black text-gray-300 rounded-full border border-white/5 shadow-lg transition pointer-events-auto hover:scale-110 active:scale-95"
               aria-label="Previous slide"
             >
-              <HiArrowCircleLeft className="text-2xl sm:text-3xl md:text-4xl text-gray-800" />
+              <HiArrowCircleLeft className="text-2xl sm:text-3xl" />
             </button>
             <button 
               onClick={nextslide} 
-              className="p-2 sm:p-3 bg-white/80 hover:bg-white rounded-full shadow-lg transition-all hover:scale-110"
+              className="p-2 sm:p-3 bg-[#15161b]/80 hover:bg-amber-500 hover:text-black text-gray-300 rounded-full border border-white/5 shadow-lg transition pointer-events-auto hover:scale-110 active:scale-95"
               aria-label="Next slide"
             >
-              <HiArrowCircleRight className="text-2xl sm:text-3xl md:text-4xl text-gray-800" />
+              <HiArrowCircleRight className="text-2xl sm:text-3xl" />
             </button>
           </div>
 
           {/* Slide Indicators */}
-          <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 z-20 flex gap-2">
-            {product1.map((_, index) => (
+          <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 z-20 flex gap-2">
+            {products.map((_, index) => (
               <button
                 key={index}
                 onClick={() => setCurrslide(index)}
-                className={`w-2 h-2 sm:w-3 sm:h-3 rounded-full transition-all ${
-                  index === currslide ? "bg-white scale-125" : "bg-white/60"
+                className={`w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full transition-all ${
+                  index === currslide ? "bg-amber-500 w-6" : "bg-white/20 hover:bg-white/40"
                 }`}
                 aria-label={`Go to slide ${index + 1}`}
               />
