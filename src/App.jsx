@@ -1,16 +1,16 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
-import Home from './pages/Home/Home';
-import Cart from './pages/Cart';
-import Fav from './pages/Fav';
-import Login from './pages/Login';
-import Allproduct from './pages/Allproduct';
-import ProductDetail from './pages/ProductDetail';
-import Checkout from './pages/Checkout';
-import Profile from './pages/Profile';
-import AdminDashboard from './pages/AdminDashboard';
-import { AppProvider } from './pages/context';
+import Home from './modules/user/pages/Home';
+import Cart from './modules/user/pages/Cart';
+import Fav from './modules/user/pages/Fav';
+import Login from './modules/user/pages/Login';
+import AllProducts from './modules/user/pages/AllProducts';
+import ProductDetail from './modules/user/pages/ProductDetail';
+import Checkout from './modules/user/pages/Checkout';
+import Profile from './modules/user/pages/Profile';
+import AdminDashboard from './modules/admin/pages/Dashboard';
+import { AppContext } from './context/AppContext';
 
 function App() {
   return (
@@ -22,7 +22,7 @@ function App() {
             <Route path="/cart" element={<Cart />} />
             <Route path="/Fav" element={<Fav />} />
             <Route path="/Login" element={<Login />} />
-            <Route path="/AllProducts" element={<Allproduct />} />
+            <Route path="/AllProducts" element={<AllProducts />} />
             <Route path="/product/:id" element={<ProductDetail />} />
             <Route path="/checkout" element={<Checkout />} />
             <Route path="/profile" element={<Profile />} />
