@@ -12,8 +12,8 @@ function ProductDetail() {
   const navigate = useNavigate();
   const { addToCart, addToWishlist, wishlist, isAuthenticated } = useContext(AppContext);
 
-  const [product, setProduct] = useState(null);
-  const [related, setRelated] = useState([]);
+  const [product, setProduct] = useState<any>(null);
+  const [related, setRelated] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [quantity, setQuantity] = useState(1);
   const [cartAdding, setCartAdding] = useState(false);

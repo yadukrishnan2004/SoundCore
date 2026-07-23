@@ -10,7 +10,7 @@ import ProductDetail from './modules/user/pages/ProductDetail';
 import Checkout from './modules/user/pages/Checkout';
 import Profile from './modules/user/pages/Profile';
 import AdminDashboard from './modules/admin/pages/Dashboard';
-import { AppContext } from './context/AppContext';
+import { AppProvider } from './context/AppContext';
 
 function App() {
   return (

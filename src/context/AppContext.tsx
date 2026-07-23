@@ -75,7 +75,7 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
   // ----------------------------------------------------
   // Auth API Methods
   // ----------------------------------------------------
-  const login = async (email, password) => {
+  const login = async (email: string, password: string) => {
     const res = await api.post(API_ROUTES.USER_LOGIN, { email, password });
     if (res.data && res.data.status === 200) {
       setUser(res.data.data);
@@ -86,12 +86,12 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
     return res.data;
   };
 
-  const signup = async (name, email, password) => {
+  const signup = async (name: string, email: string, password: string) => {
     const res = await api.post(API_ROUTES.USER_SIGNUP, { name, email, password });
     return res.data;
   };
 
-  const verifyOtp = async (email, otp) => {
+  const verifyOtp = async (email: string, otp: string) => {
     const res = await api.post(API_ROUTES.USER_VERIFY, { email, otp });
     if (res.data && res.data.status === 200) {
       setIsAuthenticated(true);
@@ -101,12 +101,12 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
     return res.data;
   };
 
-  const forgotPassword = async (email) => {
+  const forgotPassword = async (email: string) => {
     const res = await api.post(API_ROUTES.USER_FORGOT_PASSWORD, { email });
     return res.data;
   };
 
-  const resetPassword = async (code, password) => {
+  const resetPassword = async (code: string, password: string) => {
     const res = await api.post(API_ROUTES.USER_RESET_PASSWORD, { code, password });
     return res.data;
   };
@@ -124,7 +124,7 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
     }
   };
 
-  const updateProfile = async (name) => {
+  const updateProfile = async (name: string) => {
     const res = await api.put(API_ROUTES.USER_PROFILE, { name });
     if (res.data && res.data.status === 200) {
       setUser(prev => prev ? { ...prev, name } : null);
@@ -146,7 +146,7 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
     }
   };
 
-  const addToCart = async (productId, quantity = 1) => {
+  const addToCart = async (productId: string | number, quantity = 1) => {
     if (!isAuthenticated) throw new Error("Please login to add items to cart");
     const res = await api.post(API_ROUTES.CART_ADD, { product_id: productId, quantity });
     if (res.data && res.data.status === 200) {
@@ -155,7 +155,7 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
     return res.data;
   };
 
-  const updateCartQuantity = async (productId, quantity) => {
+  const updateCartQuantity = async (productId: string | number, quantity: number) => {
     if (!isAuthenticated) return;
     const res = await api.put(API_ROUTES.CART_ITEM(productId), { quantity });
     if (res.data && res.data.status === 200) {
@@ -164,7 +164,7 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
     return res.data;
   };
 
-  const removeFromCart = async (productId) => {
+  const removeFromCart = async (productId: string | number) => {
     if (!isAuthenticated) return;
     const res = await api.delete(API_ROUTES.CART_ITEM(productId));
     if (res.data && res.data.status === 200) {
@@ -196,7 +196,7 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
     }
   };
 
-  const addToWishlist = async (productId) => {
+  const addToWishlist = async (productId: string | number) => {
     if (!isAuthenticated) throw new Error("Please login to add items to favorites");
     const res = await api.post(API_ROUTES.WISHLIST_ITEM(productId));
     if (res.data && res.data.status === 200) {
@@ -205,7 +205,7 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
     return res.data;
   };
 
-  const removeFromWishlist = async (productId) => {
+  const removeFromWishlist = async (productId: string | number) => {
     if (!isAuthenticated) return;
     const res = await api.delete(API_ROUTES.WISHLIST_ITEM(productId));
     if (res.data && res.data.status === 200) {
