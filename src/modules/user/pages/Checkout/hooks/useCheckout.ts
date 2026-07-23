@@ -1,6 +1,7 @@
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { AppContext } from '../../../../../context/AppContext';
+import { useAuthStore } from '../../../../../store/useAuthStore';
+import { useCartStore } from '../../../../../store/useCartStore';
 import api from '../../../../../api/axios';
 import { API_ROUTES } from '../../../../../api/routes';
 
@@ -13,7 +14,8 @@ declare global {
 export function useCheckout() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-  const { cart, user, isAuthenticated, clearCart } = useContext(AppContext) as any;
+  const { user, isAuthenticated } = useAuthStore();
+  const { cart, clearCart } = useCartStore();
 
   // Buy Now flags
   const isBuyNow = searchParams.get('buy_now') === 'true';

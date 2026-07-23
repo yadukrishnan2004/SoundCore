@@ -1,12 +1,12 @@
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { AppContext } from '../../../../../context/AppContext';
+import { useAuthStore } from '../../../../../store/useAuthStore';
 import api from '../../../../../api/axios';
 import { API_ROUTES } from '../../../../../api/routes';
 
 export function useAdminDashboard() {
   const navigate = useNavigate();
-  const { user, isAuthenticated, authLoading } = useContext(AppContext) as any;
+  const { user, isAuthenticated, authLoading } = useAuthStore();
 
   const [activeTab, setActiveTab] = useState('analytics');
   const [loading, setLoading] = useState(false);

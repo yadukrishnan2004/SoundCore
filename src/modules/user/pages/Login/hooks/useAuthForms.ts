@@ -1,11 +1,11 @@
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { AppContext } from '../../../../../context/AppContext';
+import { useAuthStore } from '../../../../../store/useAuthStore';
 
 export function useAuthForms() {
   const navigate = useNavigate();
   const location = useLocation();
-  const { login, signup, verifyOtp, forgotPassword, resetPassword } = useContext(AppContext) as any;
+  const { login, signup, verifyOtp, forgotPassword, resetPassword } = useAuthStore();
 
   const from = location.state?.from?.pathname || '/';
 

@@ -1,32 +1,33 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import { FaPlay, FaShoppingCart, FaInfoCircle } from "react-icons/fa";
 import { motion, AnimatePresence } from "framer-motion";
 import { slideRight } from '../../../utils/animation';
 import { HiArrowCircleLeft, HiArrowCircleRight } from "react-icons/hi";
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import api from '../../../api/axios';
 import { API_ROUTES } from '../../../api/routes';
-import { AppContext } from '../../../context/AppContext';
+import { useAuthStore } from '../../../store/useAuthStore';
+import { useCartStore } from '../../../store/useCartStore';
 
 function Hero() {
   const navigate = useNavigate();
-  const { addToCart, isAuthenticated } = useContext(AppContext);
-  const [products, setProducts] = useState([]);
+  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
+  const addToCart = useCartStore((state) => state.addToCart);
+  const [products, setProducts] = useState<any[]>([]);
   const [currslide, setCurrslide] = useState(0);
   const [loading, setLoading] = useState(true);
-  const [cartAdding, setCartAdding] = useState(null);
+  const [cartAdding, setCartAdding] = useState<any>(null);
 
   useEffect(() => {
     const fetchHeroProducts = async () => {
       try {
         setLoading(true);
-        // Get all products and take the first few for the slideshow
         const res = await api.get(API_ROUTES.USER_ALL_PRODUCTS + '?limit=5');
         if (res.data && res.data.status === 200) {
           setProducts(res.data.data || []);
         }
       } catch (err) {
-        console.error("Hero products fetch failed", err);
+        console.error("Failed to fetch hero products", err);
       } finally {
         setLoading(false);
       }
@@ -34,151 +35,142 @@ function Hero() {
     fetchHeroProducts();
   }, []);
 
-  const prevslide = () => {
-    setCurrslide(currslide === 0 ? products.length - 1 : currslide - 1);
-  };
+  useEffect(() => {
+    if (products.length === 0) return;
+    const timer = setInterval(() => {
+      setCurrslide((prev) => (prev + 1) % products.length);
+    }, 6000);
+    return () => clearInterval(timer);
+  }, [products]);
 
-  const nextslide = () => {
-    setCurrslide(currslide === products.length - 1 ? 0 : currslide + 1);
-  };
-
-  const handleAddToCart = async (productId) => {
+  const handleAddToCart = async (prodId: any) => {
     if (!isAuthenticated) {
       navigate('/Login');
       return;
     }
     try {
-      setCartAdding(productId);
-      await addToCart(productId, 1);
-      alert("Added to cart successfully!");
-    } catch (err) {
+      setCartAdding(prodId);
+      await addToCart(prodId, 1);
+      alert("Added to cart!");
+    } catch (err: any) {
       alert(err.message || "Failed to add to cart");
     } finally {
       setCartAdding(null);
     }
   };
 
-  if (loading) {
+  if (loading || products.length === 0) {
     return (
-      <div className="w-full h-[500px] flex items-center justify-center bg-[#0b0c10]">
+      <section className="relative w-full h-[500px] sm:h-[600px] bg-[#0b0c10] flex items-center justify-center">
         <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-amber-500"></div>
-      </div>
+      </section>
     );
   }
 
-  if (products.length === 0) {
-    return null;
-  }
+  const currentItem = products[currslide];
 
   return (
-    <div className="w-full flex justify-center bg-[#0b0c10] py-6 sm:py-10">
-      <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-[#1c1d24] to-[#121319] border border-white/5 shadow-2xl">
-          
-          {/* Slider Container */}
-          <div className="relative h-[550px] sm:h-[600px] md:h-[550px] lg:h-[500px]">
-            {products.map((item, index) => (
-              <div
-                key={item.id}
-                className={`absolute top-0 left-0 w-full h-full transition-all duration-700 ease-in-out flex items-center ${
-                  index === currslide ? "opacity-100 z-10 scale-100" : "opacity-0 z-0 scale-95 pointer-events-none"
-                }`}
-              >
-                {/* Content Grid */}
-                <div className="w-full h-full grid grid-cols-1 md:grid-cols-2 gap-8 items-center px-6 sm:px-12 py-10">
-                  
-                  {/* Text Content */}
-                  <div className="flex flex-col justify-center text-center md:text-left order-2 md:order-1 space-y-4 sm:space-y-6">
-                    <div>
-                      <span className="inline-block bg-amber-500/10 text-amber-500 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-widest mb-3">
-                        {item.category}
-                      </span>
-                      <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white leading-tight">
-                        {item.name}
-                      </h1>
-                    </div>
-                    
-                    <p className="text-gray-400 text-sm sm:text-base line-clamp-3 leading-relaxed">
-                      {item.desc || item.description}
-                    </p>
-
-                    <div className="flex items-baseline justify-center md:justify-start gap-3">
-                      <span className="text-3xl font-black text-amber-500">₹{item.price}</span>
-                      {item.offerprice > 0 && (
-                        <span className="text-lg text-gray-500 line-through">₹{item.offerprice}</span>
-                      )}
-                    </div>
-
-                    {/* Action Buttons */}
-                    <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start items-center">
-                      <button
-                        onClick={() => handleAddToCart(item.id)}
-                        disabled={cartAdding === item.id}
-                        className="w-full sm:w-auto px-8 py-3 bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-black font-bold text-sm sm:text-base rounded-full shadow-lg hover:shadow-amber-500/20 transition transform hover:-translate-y-0.5 active:translate-y-0 flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
-                      >
-                        <FaShoppingCart />
-                        {cartAdding === item.id ? "Adding..." : "ADD TO CART"}
-                      </button>
-                      
-                      <Link
-                        to={`/product/${item.id}`}
-                        className="w-full sm:w-auto px-8 py-3 bg-white/5 hover:bg-white/10 text-white font-semibold text-sm sm:text-base rounded-full border border-white/10 hover:border-white/20 transition text-center flex items-center justify-center gap-2"
-                      >
-                        <FaInfoCircle />
-                        DETAILS
-                      </Link>
-                    </div>
-                  </div>
-
-                  {/* Image */}
-                  <div className="flex justify-center items-center order-1 md:order-2 h-48 sm:h-64 md:h-80 lg:h-96 relative">
-                    <div className="absolute w-48 h-48 sm:w-64 sm:h-64 bg-amber-500/5 rounded-full blur-3xl -z-10"></div>
-                    <img
-                      src={item.images && item.images.length > 0 ? item.images[0] : "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?q=80&w=600&auto=format&fit=crop"}
-                      alt={item.name}
-                      className="max-h-40 sm:max-h-56 md:max-h-72 lg:max-h-80 w-auto object-contain drop-shadow-[0_20px_50px_rgba(245,158,11,0.2)] hover:scale-105 transition-transform duration-500"
-                    />
-                  </div>
-
-                </div>
-              </div>
-            ))}
-          </div>
-
-          {/* Navigation Buttons */}
-          <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 flex justify-between items-center px-4 z-20 pointer-events-none">
-            <button 
-              onClick={prevslide} 
-              className="p-2 sm:p-3 bg-[#15161b]/80 hover:bg-amber-500 hover:text-black text-gray-300 rounded-full border border-white/5 shadow-lg transition pointer-events-auto hover:scale-110 active:scale-95"
-              aria-label="Previous slide"
+    <section className="relative w-full h-[500px] sm:h-[600px] bg-[#0b0c10] overflow-hidden flex items-center justify-center px-4 sm:px-8 border-b border-white/5">
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={currentItem.id}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.8 }}
+          className="max-w-7xl w-full grid grid-cols-1 md:grid-cols-12 gap-8 items-center z-10"
+        >
+          {/* Text Content */}
+          <div className="md:col-span-7 space-y-6 text-center md:text-left">
+            <motion.div
+              variants={slideRight(0.2)}
+              initial="hidden"
+              animate="visible"
+              className="inline-flex items-center gap-2 bg-amber-500/10 border border-amber-500/20 px-3.5 py-1 rounded-full text-amber-500 text-xs font-black uppercase tracking-widest"
             >
-              <HiArrowCircleLeft className="text-2xl sm:text-3xl" />
-            </button>
-            <button 
-              onClick={nextslide} 
-              className="p-2 sm:p-3 bg-[#15161b]/80 hover:bg-amber-500 hover:text-black text-gray-300 rounded-full border border-white/5 shadow-lg transition pointer-events-auto hover:scale-110 active:scale-95"
-              aria-label="Next slide"
-            >
-              <HiArrowCircleRight className="text-2xl sm:text-3xl" />
-            </button>
-          </div>
+              <FaPlay className="text-[10px]" /> Featured Flagship Acoustic
+            </motion.div>
 
-          {/* Slide Indicators */}
-          <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 z-20 flex gap-2">
-            {products.map((_, index) => (
+            <motion.h1
+              variants={slideRight(0.4)}
+              initial="hidden"
+              animate="visible"
+              className="text-4xl sm:text-6xl font-black text-white tracking-tight leading-none capitalize"
+            >
+              {currentItem.name}
+            </motion.h1>
+
+            <motion.p
+              variants={slideRight(0.6)}
+              initial="hidden"
+              animate="visible"
+              className="text-sm sm:text-base text-gray-400 line-clamp-2 max-w-xl font-light leading-relaxed mx-auto md:mx-0"
+            >
+              {currentItem.desc || currentItem.description || "Immerse yourself in precision tuned spatial drivers and active noise suppression."}
+            </motion.p>
+
+            <motion.div
+              variants={slideRight(0.8)}
+              initial="hidden"
+              animate="visible"
+              className="flex items-center justify-center md:justify-start gap-4 pt-2"
+            >
               <button
-                key={index}
-                onClick={() => setCurrslide(index)}
-                className={`w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full transition-all ${
-                  index === currslide ? "bg-amber-500 w-6" : "bg-white/20 hover:bg-white/40"
-                }`}
-                aria-label={`Go to slide ${index + 1}`}
-              />
-            ))}
+                onClick={() => handleAddToCart(currentItem.id)}
+                disabled={cartAdding === currentItem.id}
+                className="px-8 py-3.5 bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-black font-extrabold text-xs rounded-full transition transform hover:-translate-y-0.5 shadow-lg flex items-center gap-2 cursor-pointer disabled:opacity-50"
+              >
+                <FaShoppingCart /> {cartAdding === currentItem.id ? "Adding..." : `ADD TO CART • ₹${currentItem.price}`}
+              </button>
+
+              <button
+                onClick={() => navigate(`/product/${currentItem.id}`)}
+                className="px-6 py-3.5 bg-white/5 hover:bg-white/10 text-white font-bold text-xs rounded-full border border-white/10 transition flex items-center gap-2"
+              >
+                <FaInfoCircle /> View Specs
+              </button>
+            </motion.div>
           </div>
-        </div>
+
+          {/* Image */}
+          <div className="md:col-span-5 flex items-center justify-center relative">
+            <motion.div
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ duration: 0.6 }}
+              className="relative w-72 h-72 sm:w-96 sm:h-96 flex items-center justify-center"
+            >
+              <div className="absolute inset-0 bg-amber-500/10 rounded-full blur-3xl -z-10"></div>
+              <img
+                src={
+                  currentItem.images?.[0] ||
+                  currentItem.image ||
+                  "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?q=80&w=800&auto=format&fit=crop"
+                }
+                alt={currentItem.name}
+                className="max-h-full max-w-full object-contain filter drop-shadow-[0_20px_30px_rgba(0,0,0,0.8)]"
+              />
+            </motion.div>
+          </div>
+        </motion.div>
+      </AnimatePresence>
+
+      {/* Navigation Controls */}
+      <div className="absolute bottom-6 right-6 sm:right-12 flex items-center gap-2 z-20">
+        <button
+          onClick={() => setCurrslide((prev) => (prev === 0 ? products.length - 1 : prev - 1))}
+          className="text-gray-500 hover:text-amber-500 text-3xl transition"
+        >
+          <HiArrowCircleLeft />
+        </button>
+        <button
+          onClick={() => setCurrslide((prev) => (prev + 1) % products.length)}
+          className="text-gray-500 hover:text-amber-500 text-3xl transition"
+        >
+          <HiArrowCircleRight />
+        </button>
       </div>
-    </div>
+    </section>
   );
 }
 

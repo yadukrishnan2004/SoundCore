@@ -1,12 +1,16 @@
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { AppContext } from '../../../../../context/AppContext';
+import { useAuthStore } from '../../../../../store/useAuthStore';
+import { useCartStore } from '../../../../../store/useCartStore';
+import { useWishlistStore } from '../../../../../store/useWishlistStore';
 import api from '../../../../../api/axios';
 import { API_ROUTES } from '../../../../../api/routes';
 
 export function useAllProducts() {
   const navigate = useNavigate();
-  const { addToCart, addToWishlist, wishlist, isAuthenticated } = useContext(AppContext) as any;
+  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
+  const addToCart = useCartStore((state) => state.addToCart);
+  const { wishlist, addToWishlist } = useWishlistStore();
   const [searchParams, setSearchParams] = useSearchParams();
 
   // Filter states
@@ -136,7 +140,7 @@ export function useAllProducts() {
     setSelectedSort,
     showMobileFilters,
     setShowMobileFilters,
-    wishlist,
+    wishlist: wishlist.item || [],
     addingId,
     searchParams,
     setSearchParams,

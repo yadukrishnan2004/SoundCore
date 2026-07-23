@@ -1,12 +1,12 @@
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { AppContext } from '../../../../../context/AppContext';
+import { useAuthStore } from '../../../../../store/useAuthStore';
 import api from '../../../../../api/axios';
 import { API_ROUTES } from '../../../../../api/routes';
 
 export function useProfile() {
   const navigate = useNavigate();
-  const { user, isAuthenticated, authLoading, updateProfile } = useContext(AppContext) as any;
+  const { user, isAuthenticated, authLoading, updateProfile } = useAuthStore();
 
   const [activeTab, setActiveTab] = useState<'profile' | 'addresses' | 'orders'>('orders');
 

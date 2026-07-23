@@ -1,23 +1,27 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { FaTrash, FaShoppingCart, FaHeart, FaStar, FaArrowLeft } from 'react-icons/fa';
 import Navbar from '../../../../components/common/Navbar';
 import Footer from '../../../../components/common/Footer';
-import { AppContext } from '../../../../context/AppContext';
+import { useAuthStore } from '../../../../store/useAuthStore';
+import { useWishlistStore } from '../../../../store/useWishlistStore';
+import { useCartStore } from '../../../../store/useCartStore';
 
 function Fav() {
   const navigate = useNavigate();
-  const { wishlist, isAuthenticated, removeFromWishlist, clearWishlist, addToCart } = useContext(AppContext);
-  const [addingId, setAddingId] = useState(null);
+  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
+  const { wishlist, removeFromWishlist, clearWishlist } = useWishlistStore();
+  const addToCart = useCartStore((state) => state.addToCart);
+  const [addingId, setAddingId] = useState<any>(null);
 
-  const handleAddToCart = async (productId) => {
+  const handleAddToCart = async (productId: any) => {
     try {
       setAddingId(productId);
       await addToCart(productId, 1);
       // Optional: remove from wishlist upon adding to cart
       await removeFromWishlist(productId);
       alert("Added to cart!");
-    } catch (err) {
+    } catch (err: any) {
       alert(err.message || "Failed to add to cart");
     } finally {
       setAddingId(null);

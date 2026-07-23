@@ -1,11 +1,16 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FaShoppingCart, FaHeart, FaUser, FaSearch, FaSignOutAlt, FaChevronDown } from 'react-icons/fa';
 import { Link, useNavigate } from 'react-router-dom';
-import { AppContext } from '../../context/AppContext';
+import { useAuthStore } from '../../store/useAuthStore';
+import { useCartStore } from '../../store/useCartStore';
+import { useWishlistStore } from '../../store/useWishlistStore';
 
 function Navbar() {
   const navigate = useNavigate();
-  const { user, isAuthenticated, logout, cart, wishlist } = useContext(AppContext);
+  const { user, isAuthenticated, logout } = useAuthStore();
+  const cart = useCartStore((state) => state.cart);
+  const wishlist = useWishlistStore((state) => state.wishlist);
+
   const [searchQuery, setSearchQuery] = useState('');
   const [showDropdown, setShowDropdown] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
@@ -27,7 +32,7 @@ function Navbar() {
     return () => clearInterval(interval);
   }, []);
 
-  const handleSearchSubmit = (e) => {
+  const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (searchQuery.trim()) {
       navigate(`/AllProducts?search=${encodeURIComponent(searchQuery.trim())}`);
@@ -36,27 +41,24 @@ function Navbar() {
   };
 
   return (
-    <div className="w-full sticky top-0 z-50">
-      {/* Announcement Bar */}
-      <div className="w-full h-8 bg-gradient-to-r from-amber-500 to-orange-600 flex items-center justify-center overflow-hidden">
-        <div key={currentIndex} className="text-black font-bold text-xs uppercase tracking-wider animate-pulse">
-          {announcements[currentIndex]}
-        </div>
+    <div className="w-full sticky top-0 z-50 bg-[#0b0c10]/90 backdrop-blur-md border-b border-white/5">
+      {/* Dynamic Announcement Bar */}
+      <div className="bg-amber-500 text-black text-[11px] font-extrabold py-1 px-4 text-center tracking-widest uppercase transition-opacity duration-500">
+        {announcements[currentIndex]}
       </div>
 
-      {/* Main Navbar */}
-      <nav className="bg-black/90 backdrop-blur-md text-white border-b border-white/10 px-4 py-3 sm:px-6">
-        <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
+      <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
+        <div className="flex items-center justify-between gap-4">
           
-          {/* Logo */}
-          <Link to="/" className="flex items-center gap-2">
-            <span className="text-2xl font-black bg-gradient-to-r from-amber-400 to-orange-500 bg-clip-text text-transparent tracking-tight hover:scale-105 transition-transform duration-300">
-              SOUNDCORE.
+          {/* Brand Logo */}
+          <Link to="/" className="flex items-center gap-2 group">
+            <span className="text-xl font-black text-white tracking-wider group-hover:text-amber-500 transition-colors">
+              SOUND<span className="text-amber-500 group-hover:text-white transition-colors">CORE</span>
             </span>
           </Link>
 
-          {/* Search Bar - Center */}
-          <form onSubmit={handleSearchSubmit} className="hidden md:flex items-center flex-1 max-w-md relative">
+          {/* Desktop Search Bar */}
+          <form onSubmit={handleSearchSubmit} className="hidden md:flex flex-grow max-w-md relative items-center">
             <input
               type="text"
               placeholder="Search premium audio..."

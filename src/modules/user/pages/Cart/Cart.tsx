@@ -1,17 +1,19 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { FaTrash, FaShoppingCart, FaArrowRight, FaArrowLeft, FaGift } from 'react-icons/fa';
 import Navbar from '../../../../components/common/Navbar';
 import Footer from '../../../../components/common/Footer';
-import { AppContext } from '../../../../context/AppContext';
+import { useAuthStore } from '../../../../store/useAuthStore';
+import { useCartStore } from '../../../../store/useCartStore';
 import api from '../../../../api/axios';
 import { API_ROUTES } from '../../../../api/routes';
 
 function Cart() {
   const navigate = useNavigate();
-  const { cart, isAuthenticated, updateCartQuantity, removeFromCart, clearCart } = useContext(AppContext);
-  const [productImages, setProductImages] = useState({});
-  const [loadingImages, setLoadingImages] = useState(true);
+  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
+  const { cart, updateCartQuantity, removeFromCart, clearCart } = useCartStore();
+  const [productImages, setProductImages] = useState<Record<string, string>>({});
+  const [, setLoadingImages] = useState(true);
 
   // Fetch all products to create an ID -> Image URL mapping
   useEffect(() => {
@@ -20,8 +22,8 @@ function Cart() {
         setLoadingImages(true);
         const res = await api.get(API_ROUTES.USER_ALL_PRODUCTS + '?limit=100');
         if (res.data && res.data.status === 200) {
-          const mapping = {};
-          res.data.data.forEach(p => {
+          const mapping: Record<string, string> = {};
+          res.data.data.forEach((p: any) => {
             if (p.images && p.images.length > 0) {
               mapping[p.id] = p.images[0];
             }
@@ -34,18 +36,16 @@ function Cart() {
         setLoadingImages(false);
       }
     };
-    if (isAuthenticated) {
-      fetchImages();
-    }
-  }, [isAuthenticated, cart]);
 
-  const handleQtyChange = async (productId, currentQty, amount) => {
-    const nextQty = currentQty + amount;
-    if (nextQty <= 0) {
-      // Remove item
+    fetchImages();
+  }, []);
+
+  const handleQtyChange = async (productId: any, currentQty: number, change: number) => {
+    const newQty = currentQty + change;
+    if (newQty <= 0) {
       await removeFromCart(productId);
     } else {
-      await updateCartQuantity(productId, nextQty);
+      await updateCartQuantity(productId, newQty);
     }
   };
 

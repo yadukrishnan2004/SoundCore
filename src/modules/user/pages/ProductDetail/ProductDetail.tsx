@@ -1,16 +1,20 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
-import { FaShoppingCart, FaHeart, FaStar, FaArrowLeft, FaCheck, FaTruck, FaUndo, FaTag } from 'react-icons/fa';
+import { FaShoppingCart, FaHeart, FaStar, FaArrowLeft, FaTruck, FaUndo, FaTag } from 'react-icons/fa';
 import Navbar from '../../../../components/common/Navbar';
 import Footer from '../../../../components/common/Footer';
 import api from '../../../../api/axios';
 import { API_ROUTES } from '../../../../api/routes';
-import { AppContext } from '../../../../context/AppContext';
+import { useAuthStore } from '../../../../store/useAuthStore';
+import { useCartStore } from '../../../../store/useCartStore';
+import { useWishlistStore } from '../../../../store/useWishlistStore';
 
 function ProductDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { addToCart, addToWishlist, wishlist, isAuthenticated } = useContext(AppContext);
+  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
+  const addToCart = useCartStore((state) => state.addToCart);
+  const { wishlist, addToWishlist } = useWishlistStore();
 
   const [product, setProduct] = useState<any>(null);
   const [related, setRelated] = useState<any[]>([]);
@@ -23,31 +27,32 @@ function ProductDetail() {
     const fetchProduct = async () => {
       try {
         setLoading(true);
-        // Fetch product details
         const res = await api.get(API_ROUTES.USER_PRODUCT_DETAIL(id));
         if (res.data && res.data.status === 200) {
-          const prodData = res.data.data;
-          setProduct(prodData);
-          setQuantity(1);
-          if (prodData.images && prodData.images.length > 0) {
-            setActiveImg(prodData.images[0]);
+          const data = res.data.data;
+          setProduct(data);
+          if (data.images && data.images.length > 0) {
+            setActiveImg(data.images[0]);
+          } else {
+            setActiveImg(data.image || "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?q=80&w=800&auto=format&fit=crop");
           }
 
-          // Fetch related products (using same category)
-          const relatedRes = await api.get(API_ROUTES.USER_FILTER, {
-            params: { category: prodData.category, limit: 4 }
-          });
-          if (relatedRes.data && relatedRes.data.status === 200) {
-            setRelated(relatedRes.data.data.filter(p => p.id !== prodData.id) || []);
+          // Fetch related products by category
+          if (data.category) {
+            const relRes = await api.get(API_ROUTES.USER_ALL_PRODUCTS + `?category=${data.category}&limit=4`);
+            if (relRes.data && relRes.data.status === 200) {
+              setRelated(relRes.data.data.filter((p: any) => p.id !== data.id));
+            }
           }
         }
       } catch (err) {
-        console.error("Error fetching product detail", err);
+        console.error("Failed to load product details", err);
       } finally {
         setLoading(false);
       }
     };
-    fetchProduct();
+
+    if (id) fetchProduct();
   }, [id]);
 
   const handleAddToCart = async () => {
@@ -58,8 +63,8 @@ function ProductDetail() {
     try {
       setCartAdding(true);
       await addToCart(product.id, quantity);
-      alert("Added to cart successfully!");
-    } catch (err) {
+      alert(`Added ${quantity} ${product.name} to cart!`);
+    } catch (err: any) {
       alert(err.message || "Failed to add to cart");
     } finally {
       setCartAdding(false);
@@ -71,7 +76,6 @@ function ProductDetail() {
       navigate('/Login');
       return;
     }
-    // Redirect to checkout with query params for direct purchase
     navigate(`/checkout?buy_now=true&product_id=${product.id}&quantity=${quantity}`);
   };
 
@@ -83,14 +87,16 @@ function ProductDetail() {
     try {
       await addToWishlist(product.id);
       alert("Added to wishlist!");
-    } catch (err) {
+    } catch (err: any) {
       alert(err.message || "Failed to add to wishlist");
     }
   };
 
+  const inWishlist = wishlist?.item?.some((item: any) => item.product_id === product?.id || item.id === product?.id);
+
   if (loading) {
     return (
-      <div className="bg-[#0b0c10] text-white min-h-screen flex flex-col justify-between">
+      <div className="bg-[#0b0c10] text-gray-200 min-h-screen flex flex-col justify-between">
         <Navbar />
         <div className="flex-grow flex items-center justify-center">
           <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-amber-500"></div>
@@ -102,57 +108,58 @@ function ProductDetail() {
 
   if (!product) {
     return (
-      <div className="bg-[#0b0c10] text-white min-h-screen flex flex-col justify-between">
+      <div className="bg-[#0b0c10] text-gray-200 min-h-screen flex flex-col justify-between">
         <Navbar />
-        <div className="flex-grow flex flex-col items-center justify-center p-6 text-center">
-          <p className="text-xl font-bold">Product not found</p>
-          <button onClick={() => navigate('/AllProducts')} className="mt-4 px-6 py-2 bg-amber-500 text-black font-bold rounded-full">
+        <main className="max-w-4xl mx-auto px-4 py-20 text-center flex-grow flex flex-col items-center justify-center">
+          <h2 className="text-2xl font-bold text-white">Product Not Found</h2>
+          <p className="text-sm text-gray-500 mt-2">The product you are looking for does not exist or has been removed.</p>
+          <Link to="/AllProducts" className="mt-6 px-6 py-2.5 bg-amber-500 text-black font-bold text-xs rounded-full">
             Back to Shop
-          </button>
-        </div>
+          </Link>
+        </main>
         <Footer />
       </div>
     );
   }
 
-  const inWishlist = wishlist.item?.some(i => i.product_id === product.id);
+  const imagesList = product.images && product.images.length > 0 ? product.images : [activeImg];
 
   return (
     <div className="bg-[#0b0c10] text-gray-200 min-h-screen flex flex-col justify-between">
       <Navbar />
 
-      <main className="max-w-7xl w-full mx-auto px-4 sm:px-6 py-6 flex-grow">
+      <main className="max-w-7xl w-full mx-auto px-4 sm:px-6 py-8 flex-grow space-y-12">
         
-        {/* Back link */}
+        {/* Back Link */}
         <button 
           onClick={() => navigate(-1)} 
-          className="flex items-center gap-2 text-sm text-gray-400 hover:text-white mb-6 group transition-colors"
+          className="text-xs text-gray-400 hover:text-white flex items-center gap-2 group transition"
         >
-          <FaArrowLeft className="group-hover:-translate-x-1 transition-transform" /> Back
+          <FaArrowLeft className="group-hover:-translate-x-1 transition-transform" /> Back to Catalog
         </button>
 
-        {/* Product Details Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 lg:gap-16 mb-16">
+        {/* Product Hero Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
           
-          {/* Left: Images */}
-          <div className="space-y-4">
-            <div className="bg-[#15161b] border border-white/5 rounded-3xl p-6 h-96 lg:h-[450px] flex items-center justify-center relative overflow-hidden">
+          {/* Left Column: Image Gallery */}
+          <div className="lg:col-span-6 space-y-4">
+            <div className="w-full h-96 sm:h-[450px] bg-[#15161b] border border-white/5 rounded-3xl p-6 flex items-center justify-center overflow-hidden relative shadow-2xl">
               <img
-                src={activeImg || "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?q=80&w=600&auto=format&fit=crop"}
+                src={activeImg}
                 alt={product.name}
-                className="max-h-80 w-auto object-contain drop-shadow-[0_20px_50px_rgba(255,255,255,0.05)] hover:scale-105 transition-transform duration-500"
+                className="max-h-full object-contain hover:scale-105 transition-transform duration-500"
               />
             </div>
-            
-            {/* Gallery thumbnails */}
-            {product.images && product.images.length > 1 && (
-              <div className="flex gap-3 overflow-x-auto pb-1">
-                {product.images.map((img, i) => (
+
+            {/* Thumbnail selector bar */}
+            {imagesList.length > 1 && (
+              <div className="flex gap-3 overflow-x-auto pb-2">
+                {imagesList.map((img: string, idx: number) => (
                   <button
-                    key={i}
+                    key={idx}
                     onClick={() => setActiveImg(img)}
-                    className={`w-20 h-20 bg-[#15161b] border rounded-xl p-2 flex items-center justify-center shrink-0 transition-all ${
-                      activeImg === img ? 'border-amber-500 bg-[#1b1c22]' : 'border-white/5 hover:border-white/20'
+                    className={`w-20 h-20 rounded-xl bg-[#15161b] border p-2 flex items-center justify-center shrink-0 transition-all ${
+                      activeImg === img ? 'border-amber-500 scale-105' : 'border-white/5 hover:border-white/20'
                     }`}
                   >
                     <img src={img} alt="" className="max-h-full object-contain" />
@@ -162,10 +169,12 @@ function ProductDetail() {
             )}
           </div>
 
-          {/* Right: Info */}
-          <div className="space-y-6">
+          {/* Right Column: Product Info & Actions */}
+          <div className="lg:col-span-6 space-y-6">
+            
+            {/* Header info */}
             <div>
-              <span className="bg-amber-500/10 text-amber-500 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
+              <span className="text-xs font-bold text-amber-500 uppercase tracking-widest bg-amber-500/10 px-3 py-1 rounded-full border border-amber-500/20">
                 {product.category}
               </span>
               <h1 className="text-3xl lg:text-4xl font-extrabold text-white tracking-tight mt-3 mb-2">{product.name}</h1>
