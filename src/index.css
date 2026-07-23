@@ -1,6 +1,48 @@
 @import "tailwindcss";
-@layer components{
-    .primery-btn{
-        @apply bg-red-500 font-semibold px-6 py-3 rounded-full hover:!scale-110 hover:!shadow-xl duration-300;
-    }
+
+/* ----------------------------------------------------
+   Semantic Design Tokens (Dark & Light Themes)
+   ---------------------------------------------------- */
+
+:root,
+[data-theme="dark"] {
+  --color-bg-base: #0b0c10;
+  --color-bg-card: #15161b;
+  --color-bg-input: #131419;
+  --color-text-main: #f3f4f6;
+  --color-text-muted: #9ca3af;
+  --color-brand-primary: #f59e0b;
+  --color-brand-hover: #d97706;
+  --color-border-subtle: rgba(255, 255, 255, 0.05);
+}
+
+[data-theme="light"] {
+  --color-bg-base: #f8fafc;
+  --color-bg-card: #ffffff;
+  --color-bg-input: #f1f5f9;
+  --color-text-main: #0f172a;
+  --color-text-muted: #64748b;
+  --color-brand-primary: #d97706;
+  --color-brand-hover: #b45309;
+  --color-border-subtle: rgba(0, 0, 0, 0.08);
+}
+
+@theme {
+  --color-bg-base: var(--color-bg-base);
+  --color-bg-card: var(--color-bg-card);
+  --color-bg-input: var(--color-bg-input);
+  --color-text-main: var(--color-text-main);
+  --color-text-muted: var(--color-text-muted);
+  --color-brand-primary: var(--color-brand-primary);
+  --color-brand-hover: var(--color-brand-hover);
+  --color-border-subtle: var(--color-border-subtle);
+
+  --font-sans: 'Inter', system-ui, sans-serif;
+  --font-heading: 'Outfit', system-ui, sans-serif;
+}
+
+@layer components {
+  .primery-btn {
+    @apply bg-brand-primary text-black font-semibold px-6 py-3 rounded-full hover:scale-105 duration-300 transition-all;
+  }
 }

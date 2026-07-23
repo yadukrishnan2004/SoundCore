@@ -32,13 +32,13 @@ export const MobileFilterDrawer: React.FC<MobileFilterDrawerProps> = ({
 }) => {
   return (
     <div className="fixed inset-0 z-50 flex justify-end bg-black/60 backdrop-blur-sm">
-      <div className="w-80 h-full bg-[#15161b] p-6 shadow-2xl flex flex-col justify-between overflow-y-auto animate-slideLeft">
+      <div className="w-80 h-full bg-bg-card p-6 shadow-2xl flex flex-col justify-between overflow-y-auto animate-slideLeft">
         <div>
           <div className="flex justify-between items-center mb-6">
-            <span className="font-bold text-white flex items-center gap-2">
-              <FaFilter className="text-amber-500 text-sm" /> FILTER OPTIONS
+            <span className="font-bold font-heading text-text-main flex items-center gap-2">
+              <FaFilter className="text-brand-primary text-sm" /> FILTER OPTIONS
             </span>
-            <button onClick={() => setShowMobileFilters(false)} className="text-gray-400 hover:text-white">
+            <button onClick={() => setShowMobileFilters(false)} className="text-text-muted hover:text-text-main">
               <FaTimes />
             </button>
           </div>
@@ -46,19 +46,19 @@ export const MobileFilterDrawer: React.FC<MobileFilterDrawerProps> = ({
           <div className="space-y-6">
             {/* Search */}
             <div className="space-y-2">
-              <label className="text-xs text-gray-400 font-bold uppercase tracking-wider">Search</label>
+              <label className="text-xs text-text-muted font-bold uppercase tracking-wider">Search</label>
               <input
                 type="text"
                 placeholder="Keyword..."
                 value={searchVal}
                 onChange={(e) => setSearchVal(e.target.value)}
-                className="w-full bg-[#0b0c10] text-xs px-3 py-2 rounded-lg border border-white/5 focus:outline-none focus:border-amber-500"
+                className="w-full bg-bg-input text-text-main text-xs px-3 py-2 rounded-lg border border-border-subtle focus:outline-none focus:border-brand-primary"
               />
             </div>
 
             {/* Categories */}
             <div className="space-y-2">
-              <label className="text-xs text-gray-400 font-bold uppercase tracking-wider">Categories</label>
+              <label className="text-xs text-text-muted font-bold uppercase tracking-wider">Categories</label>
               <div className="space-y-1.5">
                 <div className="flex items-center gap-2">
                   <input
@@ -67,9 +67,9 @@ export const MobileFilterDrawer: React.FC<MobileFilterDrawerProps> = ({
                     name="m-category"
                     checked={!selectedCategory}
                     onChange={() => setSelectedCategory('')}
-                    className="accent-amber-500"
+                    className="accent-brand-primary"
                   />
-                  <label htmlFor="m-cat-all" className="text-xs text-gray-300 capitalize">
+                  <label htmlFor="m-cat-all" className="text-xs text-text-main capitalize">
                     All Categories
                   </label>
                 </div>
@@ -81,9 +81,9 @@ export const MobileFilterDrawer: React.FC<MobileFilterDrawerProps> = ({
                       name="m-category"
                       checked={selectedCategory === cat}
                       onChange={() => setSelectedCategory(cat)}
-                      className="accent-amber-500"
+                      className="accent-brand-primary"
                     />
-                    <label htmlFor={`m-cat-${cat}`} className="text-xs text-gray-300 capitalize">
+                    <label htmlFor={`m-cat-${cat}`} className="text-xs text-text-main capitalize">
                       {cat}
                     </label>
                   </div>
@@ -93,21 +93,21 @@ export const MobileFilterDrawer: React.FC<MobileFilterDrawerProps> = ({
 
             {/* Price */}
             <div className="space-y-2">
-              <label className="text-xs text-gray-400 font-bold uppercase tracking-wider">Price Range (₹)</label>
+              <label className="text-xs text-text-muted font-bold uppercase tracking-wider">Price Range (₹)</label>
               <div className="grid grid-cols-2 gap-2">
                 <input
                   type="number"
                   placeholder="Min"
                   value={minPrice}
                   onChange={(e) => setMinPrice(e.target.value)}
-                  className="bg-[#0b0c10] text-xs px-3 py-2 rounded-lg border border-white/5 focus:outline-none focus:border-amber-500 text-center"
+                  className="bg-bg-input text-text-main text-xs px-3 py-2 rounded-lg border border-border-subtle focus:outline-none focus:border-brand-primary text-center"
                 />
                 <input
                   type="number"
                   placeholder="Max"
                   value={maxPrice}
                   onChange={(e) => setMaxPrice(e.target.value)}
-                  className="bg-[#0b0c10] text-xs px-3 py-2 rounded-lg border border-white/5 focus:outline-none focus:border-amber-500 text-center"
+                  className="bg-bg-input text-text-main text-xs px-3 py-2 rounded-lg border border-border-subtle focus:outline-none focus:border-brand-primary text-center"
                 />
               </div>
             </div>
@@ -117,13 +117,13 @@ export const MobileFilterDrawer: React.FC<MobileFilterDrawerProps> = ({
         <div className="space-y-2 pt-6">
           <button
             onClick={applyFilters}
-            className="w-full py-3 bg-gradient-to-r from-amber-500 to-orange-600 text-black font-bold text-sm rounded-lg"
+            className="w-full py-3 bg-gradient-to-r from-amber-500 to-orange-600 text-black font-extrabold text-sm rounded-lg"
           >
             Apply Filters
           </button>
           <button
             onClick={clearFilters}
-            className="w-full py-3 bg-white/5 border border-white/10 text-white font-bold text-sm rounded-lg"
+            className="w-full py-3 bg-bg-input border border-border-subtle text-text-main font-bold text-sm rounded-lg"
           >
             Clear All
           </button>

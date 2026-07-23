@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
 import Home from './modules/user/pages/Home';
@@ -11,12 +11,19 @@ import Checkout from './modules/user/pages/Checkout';
 import Profile from './modules/user/pages/Profile';
 import AdminDashboard from './modules/admin/pages/Dashboard';
 import { AppProvider } from './context/AppContext';
+import { useThemeStore } from './store/useThemeStore';
 
 function App() {
+  const initTheme = useThemeStore((state) => state.initTheme);
+
+  useEffect(() => {
+    initTheme();
+  }, [initTheme]);
+
   return (
     <AppProvider>
       <Router>
-        <div className="App bg-[#0b0c10] min-h-screen text-gray-200">
+        <div className="App bg-bg-base min-h-screen text-text-main transition-colors duration-300">
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/cart" element={<Cart />} />

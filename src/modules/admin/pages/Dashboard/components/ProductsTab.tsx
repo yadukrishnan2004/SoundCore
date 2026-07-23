@@ -19,7 +19,7 @@ interface ProductsTabProps {
   prodImage: string;
   setProdImage: (val: string) => void;
   handleAddProduct: (e: React.FormEvent) => void;
-  handleDeleteProduct: (prodId: any) => void;
+  handleDeleteProduct: (id: any) => void;
 }
 
 export const ProductsTab: React.FC<ProductsTabProps> = ({
@@ -43,25 +43,23 @@ export const ProductsTab: React.FC<ProductsTabProps> = ({
   handleDeleteProduct
 }) => {
   return (
-    <div className="space-y-6 animate-fadeIn">
+    <div className="space-y-6">
       <div className="flex justify-between items-center">
         <div>
-          <h3 className="text-xl font-bold text-white">Product Inventory</h3>
-          <p className="text-xs text-gray-500 mt-1">Browse, delete, and add new products</p>
+          <h3 className="text-xl font-heading font-extrabold text-text-main">Inventory Management</h3>
+          <p className="text-xs text-text-muted mt-1">Catalog items count: {products.length}</p>
         </div>
-        {!showProductForm && (
-          <button
-            onClick={() => setShowProductForm(true)}
-            className="text-xs bg-amber-500 text-black px-4 py-2 rounded-xl font-bold flex items-center gap-1.5"
-          >
-            <FaPlus /> Add Product
-          </button>
-        )}
+        <button
+          onClick={() => setShowProductForm(!showProductForm)}
+          className="text-xs bg-brand-primary text-black font-extrabold px-4 py-2 rounded-xl flex items-center gap-1.5 transition cursor-pointer"
+        >
+          <FaPlus /> {showProductForm ? 'Close Form' : 'Add New Product'}
+        </button>
       </div>
 
-      {showProductForm ? (
-        <form onSubmit={handleAddProduct} className="space-y-4 bg-black/20 p-6 rounded-2xl border border-white/5">
-          <h4 className="text-sm font-bold text-white uppercase tracking-wider">New Product Details</h4>
+      {showProductForm && (
+        <form onSubmit={handleAddProduct} className="bg-bg-input p-6 rounded-2xl border border-border-subtle space-y-4">
+          <h4 className="text-sm font-heading font-bold text-text-main uppercase tracking-wider">Create New Inventory Item</h4>
           
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <input
@@ -70,100 +68,100 @@ export const ProductsTab: React.FC<ProductsTabProps> = ({
               value={prodName}
               onChange={(e) => setProdName(e.target.value)}
               required
-              className="bg-[#0b0c10] text-sm px-4 py-2.5 rounded-xl border border-white/5 focus:outline-none focus:border-amber-500"
+              className="bg-bg-base text-sm text-text-main px-4 py-2.5 rounded-xl border border-border-subtle focus:outline-none focus:border-brand-primary"
             />
             <input
               type="number"
-              placeholder="Price (INR)"
+              placeholder="Price (₹)"
               value={prodPrice}
               onChange={(e) => setProdPrice(e.target.value)}
               required
-              className="bg-[#0b0c10] text-sm px-4 py-2.5 rounded-xl border border-white/5 focus:outline-none focus:border-amber-500"
+              className="bg-bg-base text-sm text-text-main px-4 py-2.5 rounded-xl border border-border-subtle focus:outline-none focus:border-brand-primary"
             />
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <select
               value={prodCat}
               onChange={(e) => setProdCat(e.target.value)}
               required
-              className="bg-[#0b0c10] text-sm px-4 py-2.5 rounded-xl border border-white/5 focus:outline-none focus:border-amber-500"
+              className="bg-bg-base text-sm text-text-main px-4 py-2.5 rounded-xl border border-border-subtle focus:outline-none focus:border-brand-primary"
             >
               <option value="">Select Category</option>
-              {categories.map(c => <option key={c.id} value={c.name}>{c.name}</option>)}
+              {categories.map((c) => (
+                <option key={c.id || c.name} value={c.name}>{c.name}</option>
+              ))}
             </select>
-            
             <input
               type="number"
-              placeholder="Initial Stock"
+              placeholder="Stock Quantity"
               value={prodStock}
               onChange={(e) => setProdStock(e.target.value)}
               required
-              className="bg-[#0b0c10] text-sm px-4 py-2.5 rounded-xl border border-white/5 focus:outline-none focus:border-amber-500"
-            />
-
-            <input
-              type="text"
-              placeholder="Image URL"
-              value={prodImage}
-              onChange={(e) => setProdImage(e.target.value)}
-              className="bg-[#0b0c10] text-sm px-4 py-2.5 rounded-xl border border-white/5 focus:outline-none focus:border-amber-500"
+              className="bg-bg-base text-sm text-text-main px-4 py-2.5 rounded-xl border border-border-subtle focus:outline-none focus:border-brand-primary"
             />
           </div>
 
           <textarea
-            placeholder="Product Specifications Description"
+            placeholder="Product Description"
             value={prodDesc}
             onChange={(e) => setProdDesc(e.target.value)}
-            required
-            rows={3}
-            className="w-full bg-[#0b0c10] text-sm px-4 py-2.5 rounded-xl border border-white/5 focus:outline-none focus:border-amber-500"
+            rows={2}
+            className="w-full bg-bg-base text-sm text-text-main px-4 py-2.5 rounded-xl border border-border-subtle focus:outline-none focus:border-brand-primary"
           ></textarea>
 
-          <div className="flex gap-3 pt-2">
-            <button type="submit" className="px-6 py-2.5 bg-amber-500 text-black font-extrabold text-xs rounded-xl">
-              Save Product
-            </button>
-            <button type="button" onClick={() => setShowProductForm(false)} className="px-6 py-2.5 bg-white/5 text-gray-400 font-bold text-xs rounded-xl">
-              Cancel
-            </button>
-          </div>
+          <input
+            type="text"
+            placeholder="Image URL"
+            value={prodImage}
+            onChange={(e) => setProdImage(e.target.value)}
+            className="w-full bg-bg-base text-sm text-text-main px-4 py-2.5 rounded-xl border border-border-subtle focus:outline-none focus:border-brand-primary"
+          />
+
+          <button
+            type="submit"
+            className="px-6 py-2.5 bg-brand-primary text-black font-extrabold text-xs rounded-xl hover:bg-brand-hover transition"
+          >
+            Publish Product
+          </button>
         </form>
-      ) : (
-        <div className="overflow-x-auto">
-          <table className="w-full text-left border-collapse text-xs">
-            <thead>
-              <tr className="border-b border-white/5 text-gray-500 font-bold uppercase tracking-wider">
-                <th className="pb-3">Product</th>
-                <th className="pb-3">Category</th>
-                <th className="pb-3">Price</th>
-                <th className="pb-3">Stock</th>
-                <th className="pb-3 text-right">Actions</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-white/5">
-              {products.map(p => (
-                <tr key={p.id} className="hover:bg-white/5">
-                  <td className="py-3 font-semibold text-white">{p.name}</td>
-                  <td className="py-3 capitalize">{p.category}</td>
-                  <td className="py-3 font-bold text-amber-500">₹{p.price}</td>
-                  <td className={`py-3 font-bold ${p.stock <= 5 ? 'text-red-500' : 'text-green-400'}`}>
-                    {p.stock}
-                  </td>
-                  <td className="py-3 text-right">
-                    <button
-                      onClick={() => handleDeleteProduct(p.id)}
-                      className="p-2 bg-red-500/10 border border-red-500/20 text-red-500 rounded-lg hover:bg-red-500/20"
-                    >
-                      <FaTrash />
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
       )}
+
+      {/* Table */}
+      <div className="overflow-x-auto">
+        <table className="w-full text-left text-xs text-text-muted">
+          <thead className="bg-bg-input text-text-main uppercase font-heading border-b border-border-subtle">
+            <tr>
+              <th className="p-3">Product</th>
+              <th className="p-3">Category</th>
+              <th className="p-3">Price</th>
+              <th className="p-3">Stock</th>
+              <th className="p-3 text-right">Action</th>
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-border-subtle">
+            {products.map((p) => (
+              <tr key={p.id} className="hover:bg-bg-input/50 transition">
+                <td className="p-3 font-bold text-text-main flex items-center gap-3">
+                  <img src={p.images?.[0] || p.image || "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?q=80&w=100&auto=format&fit=crop"} alt="" className="w-8 h-8 rounded bg-bg-input object-contain p-0.5" />
+                  <span className="truncate max-w-xs">{p.name}</span>
+                </td>
+                <td className="p-3 uppercase font-semibold text-brand-primary">{p.category}</td>
+                <td className="p-3 font-bold text-text-main font-heading">₹{p.price}</td>
+                <td className="p-3 font-bold">{p.stock}</td>
+                <td className="p-3 text-right">
+                  <button
+                    onClick={() => handleDeleteProduct(p.id)}
+                    className="p-2 text-red-400 hover:text-red-500 hover:bg-red-500/10 rounded-lg transition"
+                  >
+                    <FaTrash />
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };

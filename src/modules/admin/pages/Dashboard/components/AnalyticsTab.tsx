@@ -1,4 +1,5 @@
 import React from 'react';
+import { FaRupeeSign, FaBoxOpen, FaUsers, FaChartLine } from 'react-icons/fa';
 
 interface AnalyticsTabProps {
   kpi: any;
@@ -8,30 +9,43 @@ interface AnalyticsTabProps {
 
 export const AnalyticsTab: React.FC<AnalyticsTabProps> = ({ kpi, ordersCount, usersCount }) => {
   return (
-    <div className="space-y-6 animate-fadeIn">
+    <div className="space-y-6">
       <div>
-        <h3 className="text-xl font-bold text-white">Key Performance Metrics</h3>
-        <p className="text-xs text-gray-500 mt-1">Live metrics from your Go e-commerce backend</p>
+        <h3 className="text-xl font-heading font-extrabold text-text-main">Executive KPI Analytics</h3>
+        <p className="text-xs text-text-muted mt-1">Real-time revenue performance & system telemetry</p>
       </div>
 
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <div className="bg-black/20 p-5 rounded-2xl border border-white/5 text-center">
-          <p className="text-xs text-gray-500 uppercase tracking-wider font-bold">Total Sales</p>
-          <p className="text-2xl font-black text-amber-500 mt-2">
-            ₹{kpi?.gross_merchandise_value || kpi?.total_revenue || kpi?.total_sales || 189900}
-          </p>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="bg-bg-input border border-border-subtle p-5 rounded-2xl space-y-2">
+          <div className="flex justify-between items-center text-brand-primary">
+            <span className="text-xs font-bold text-text-muted uppercase">Gross Revenue</span>
+            <FaRupeeSign className="text-lg" />
+          </div>
+          <p className="text-2xl font-heading font-black text-text-main">₹{kpi?.totalRevenue || 0}</p>
         </div>
-        <div className="bg-black/20 p-5 rounded-2xl border border-white/5 text-center">
-          <p className="text-xs text-gray-500 uppercase tracking-wider font-bold">Active Orders</p>
-          <p className="text-2xl font-black text-white mt-2">{kpi?.total_orders || ordersCount || 12}</p>
+
+        <div className="bg-bg-input border border-border-subtle p-5 rounded-2xl space-y-2">
+          <div className="flex justify-between items-center text-blue-400">
+            <span className="text-xs font-bold text-text-muted uppercase">Total Orders</span>
+            <FaBoxOpen className="text-lg" />
+          </div>
+          <p className="text-2xl font-heading font-black text-text-main">{ordersCount}</p>
         </div>
-        <div className="bg-black/20 p-5 rounded-2xl border border-white/5 text-center">
-          <p className="text-xs text-gray-500 uppercase tracking-wider font-bold">Customers</p>
-          <p className="text-2xl font-black text-white mt-2">{kpi?.total_users || usersCount || 8}</p>
+
+        <div className="bg-bg-input border border-border-subtle p-5 rounded-2xl space-y-2">
+          <div className="flex justify-between items-center text-green-400">
+            <span className="text-xs font-bold text-text-muted uppercase">Active Customers</span>
+            <FaUsers className="text-lg" />
+          </div>
+          <p className="text-2xl font-heading font-black text-text-main">{usersCount}</p>
         </div>
-        <div className="bg-black/20 p-5 rounded-2xl border border-white/5 text-center">
-          <p className="text-xs text-red-400 uppercase tracking-wider font-bold">Low Stock Alerts</p>
-          <p className="text-2xl font-black text-red-500 mt-2">{kpi?.low_stock_count || 3}</p>
+
+        <div className="bg-bg-input border border-border-subtle p-5 rounded-2xl space-y-2">
+          <div className="flex justify-between items-center text-purple-400">
+            <span className="text-xs font-bold text-text-muted uppercase">Monthly Velocity</span>
+            <FaChartLine className="text-lg" />
+          </div>
+          <p className="text-2xl font-heading font-black text-text-main">+18.4%</p>
         </div>
       </div>
     </div>

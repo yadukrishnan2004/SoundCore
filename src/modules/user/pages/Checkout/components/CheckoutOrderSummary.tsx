@@ -22,40 +22,40 @@ export const CheckoutOrderSummary: React.FC<CheckoutOrderSummaryProps> = ({
   handlePlaceOrder
 }) => {
   return (
-    <div className="lg:col-span-4 bg-[#15161b] border border-white/5 rounded-3xl p-6 space-y-6">
-      <h2 className="text-lg font-extrabold text-white border-b border-white/5 pb-3">ORDER DETAILS</h2>
+    <div className="lg:col-span-4 bg-bg-card border border-border-subtle rounded-3xl p-6 space-y-6">
+      <h2 className="text-lg font-heading font-extrabold text-text-main border-b border-border-subtle pb-3">ORDER DETAILS</h2>
 
       {/* Items List */}
       <div className="space-y-4 max-h-56 overflow-y-auto pr-1">
         {items.map((item, index) => (
           <div key={index} className="flex justify-between items-start gap-4">
             <div className="text-xs">
-              <p className="font-bold text-gray-300 line-clamp-1">{item.product_name}</p>
-              <p className="text-gray-500 mt-0.5">Qty: {item.quantity}</p>
+              <p className="font-bold text-text-main line-clamp-1">{item.product_name}</p>
+              <p className="text-text-muted mt-0.5">Qty: {item.quantity}</p>
             </div>
-            <span className="text-xs font-black text-white shrink-0">₹{item.sub_total}</span>
+            <span className="text-xs font-black text-text-main shrink-0 font-heading">₹{item.sub_total}</span>
           </div>
         ))}
       </div>
 
       {/* Totals */}
-      <div className="border-t border-white/5 pt-4 space-y-2.5 text-xs">
-        <div className="flex justify-between text-gray-400">
+      <div className="border-t border-border-subtle pt-4 space-y-2.5 text-xs">
+        <div className="flex justify-between text-text-muted">
           <span>Subtotal</span>
-          <span className="font-bold text-white">₹{subtotal}</span>
+          <span className="font-bold text-text-main">₹{subtotal}</span>
         </div>
-        <div className="flex justify-between text-gray-400">
+        <div className="flex justify-between text-text-muted">
           <span>Shipping Fee</span>
-          <span className="font-bold text-white">₹{shipping}</span>
+          <span className="font-bold text-text-main">₹{shipping}</span>
         </div>
-        <div className="flex justify-between text-gray-400">
+        <div className="flex justify-between text-text-muted">
           <span>GST (10%)</span>
-          <span className="font-bold text-white">₹{tax.toFixed(1)}</span>
+          <span className="font-bold text-text-main">₹{tax.toFixed(1)}</span>
         </div>
 
-        <div className="border-t border-white/5 pt-3 flex justify-between text-sm font-extrabold text-white">
+        <div className="border-t border-border-subtle pt-3 flex justify-between text-sm font-extrabold text-text-main">
           <span>Grand Total</span>
-          <span className="text-amber-500">₹{total.toFixed(1)}</span>
+          <span className="text-brand-primary font-heading text-base">₹{total.toFixed(1)}</span>
         </div>
       </div>
 

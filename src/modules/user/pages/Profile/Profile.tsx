@@ -48,10 +48,10 @@ function Profile() {
 
   if (authLoading) {
     return (
-      <div className="bg-[#0b0c10] text-white min-h-screen flex flex-col justify-between">
+      <div className="bg-bg-base text-text-main min-h-screen flex flex-col justify-between">
         <Navbar />
         <div className="flex-grow flex items-center justify-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-amber-500"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-brand-primary"></div>
         </div>
         <Footer />
       </div>
@@ -59,26 +59,26 @@ function Profile() {
   }
 
   return (
-    <div className="bg-[#0b0c10] text-gray-200 min-h-screen flex flex-col justify-between">
+    <div className="bg-bg-base text-text-main min-h-screen flex flex-col justify-between transition-colors duration-300">
       <Navbar />
 
       <main className="max-w-7xl w-full mx-auto px-4 sm:px-6 py-10 flex-grow grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
         
         {/* Left Side: Sidebar Controls */}
-        <aside className="lg:col-span-3 bg-[#15161b] border border-white/5 rounded-3xl p-6 space-y-6">
-          <div className="text-center pb-6 border-b border-white/5">
-            <div className="w-16 h-16 bg-gradient-to-tr from-amber-500 to-orange-600 rounded-full flex items-center justify-center text-black font-black text-2xl mx-auto mb-4">
+        <aside className="lg:col-span-3 bg-bg-card border border-border-subtle rounded-3xl p-6 space-y-6">
+          <div className="text-center pb-6 border-b border-border-subtle">
+            <div className="w-16 h-16 bg-gradient-to-tr from-amber-500 to-orange-600 rounded-full flex items-center justify-center text-black font-black text-2xl mx-auto mb-4 font-heading">
               {user?.name?.[0]?.toUpperCase() || "U"}
             </div>
-            <h2 className="text-lg font-bold text-white truncate">{user?.name}</h2>
-            <p className="text-xs text-gray-500 truncate mt-0.5">{user?.email}</p>
+            <h2 className="text-lg font-heading font-bold text-text-main truncate">{user?.name}</h2>
+            <p className="text-xs text-text-muted truncate mt-0.5">{user?.email}</p>
           </div>
 
           <div className="flex flex-col gap-2">
             <button
               onClick={() => setActiveTab('orders')}
               className={`w-full py-3 px-4 rounded-xl font-semibold text-sm flex items-center gap-3 transition ${
-                activeTab === 'orders' ? 'bg-amber-500 text-black' : 'text-gray-400 hover:bg-white/5'
+                activeTab === 'orders' ? 'bg-brand-primary text-black font-extrabold' : 'text-text-muted hover:bg-bg-input'
               }`}
             >
               <FaBoxOpen /> Order History
@@ -86,7 +86,7 @@ function Profile() {
             <button
               onClick={() => setActiveTab('addresses')}
               className={`w-full py-3 px-4 rounded-xl font-semibold text-sm flex items-center gap-3 transition ${
-                activeTab === 'addresses' ? 'bg-amber-500 text-black' : 'text-gray-400 hover:bg-white/5'
+                activeTab === 'addresses' ? 'bg-brand-primary text-black font-extrabold' : 'text-text-muted hover:bg-bg-input'
               }`}
             >
               <FaMapMarkerAlt /> Address Book
@@ -94,7 +94,7 @@ function Profile() {
             <button
               onClick={() => setActiveTab('profile')}
               className={`w-full py-3 px-4 rounded-xl font-semibold text-sm flex items-center gap-3 transition ${
-                activeTab === 'profile' ? 'bg-amber-500 text-black' : 'text-gray-400 hover:bg-white/5'
+                activeTab === 'profile' ? 'bg-brand-primary text-black font-extrabold' : 'text-text-muted hover:bg-bg-input'
               }`}
             >
               <FaUser /> Edit Profile
@@ -103,7 +103,7 @@ function Profile() {
         </aside>
 
         {/* Right Side: Tab Contents */}
-        <div className="lg:col-span-9 bg-[#15161b] border border-white/5 rounded-3xl p-6 sm:p-8 min-h-[500px]">
+        <div className="lg:col-span-9 bg-bg-card border border-border-subtle rounded-3xl p-6 sm:p-8 min-h-[500px]">
           
           {activeTab === 'profile' && (
             <ProfileInfoTab

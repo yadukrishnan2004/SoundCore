@@ -23,8 +23,8 @@ export const VerifyResetForm: React.FC<VerifyResetFormProps> = ({
   return (
     <form onSubmit={handleResetSubmit} className="space-y-6">
       <div>
-        <h3 className="text-2xl font-black text-white">Enter New Password</h3>
-        <p className="text-xs text-gray-500 mt-1">Please enter the recovery OTP code and your new password</p>
+        <h3 className="text-2xl font-heading font-black text-text-main">Enter New Password</h3>
+        <p className="text-xs text-text-muted mt-1">Please enter the recovery OTP code and your new password</p>
       </div>
 
       <div className="space-y-4">
@@ -36,9 +36,9 @@ export const VerifyResetForm: React.FC<VerifyResetFormProps> = ({
             value={otp}
             onChange={(e) => setOtp(e.target.value)}
             required
-            className="w-full bg-[#0b0c10] text-center tracking-[0.5em] text-sm text-white font-extrabold py-3 rounded-xl border border-white/5 focus:outline-none focus:border-amber-500"
+            className="w-full bg-bg-base text-center tracking-[0.5em] text-sm text-text-main font-extrabold py-3 rounded-xl border border-border-subtle focus:outline-none focus:border-brand-primary"
           />
-          <FaKey className="absolute left-4 top-4 text-gray-600 text-sm" />
+          <FaKey className="absolute left-4 top-4 text-text-muted text-sm" />
         </div>
 
         <div className="relative">
@@ -48,16 +48,16 @@ export const VerifyResetForm: React.FC<VerifyResetFormProps> = ({
             value={newPassword}
             onChange={(e) => setNewPassword(e.target.value)}
             required
-            className="w-full bg-[#0b0c10] text-sm text-gray-200 pl-11 pr-4 py-3 rounded-xl border border-white/5 focus:outline-none focus:border-amber-500"
+            className="w-full bg-bg-base text-sm text-text-main pl-11 pr-4 py-3 rounded-xl border border-border-subtle focus:outline-none focus:border-brand-primary"
           />
-          <FaLock className="absolute left-4 top-4 text-gray-600 text-sm" />
+          <FaLock className="absolute left-4 top-4 text-text-muted text-sm" />
         </div>
       </div>
 
       <button
         type="submit"
         disabled={loading}
-        className="w-full py-3.5 bg-amber-500 hover:bg-amber-600 text-black font-extrabold rounded-xl transition cursor-pointer disabled:opacity-50"
+        className="w-full py-3.5 bg-brand-primary hover:bg-brand-hover text-black font-extrabold rounded-xl transition cursor-pointer disabled:opacity-50"
       >
         {loading ? "Updating..." : "RESET PASSWORD"}
       </button>
@@ -65,7 +65,7 @@ export const VerifyResetForm: React.FC<VerifyResetFormProps> = ({
       <button
         type="button"
         onClick={() => switchMode('forgot')}
-        className="w-full py-2.5 bg-white/5 text-xs text-gray-400 rounded-xl hover:bg-white/10 flex items-center justify-center gap-2"
+        className="w-full py-2.5 bg-bg-card text-xs text-text-muted rounded-xl hover:bg-bg-base flex items-center justify-center gap-2 border border-border-subtle"
       >
         <FaArrowLeft /> Change Email
       </button>

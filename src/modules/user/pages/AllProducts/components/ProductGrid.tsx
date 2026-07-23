@@ -25,11 +25,11 @@ export const ProductGrid: React.FC<ProductGridProps> = ({
     return (
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {[1, 2, 3, 4, 5, 6].map((n) => (
-          <div key={n} className="bg-[#15161b] border border-white/5 rounded-2xl p-4 h-80 animate-pulse flex flex-col justify-between">
-            <div className="bg-white/5 h-44 rounded-xl"></div>
+          <div key={n} className="bg-bg-card border border-border-subtle rounded-2xl p-4 h-80 animate-pulse flex flex-col justify-between">
+            <div className="bg-bg-input h-44 rounded-xl"></div>
             <div className="space-y-2">
-              <div className="bg-white/5 h-4 rounded w-3/4"></div>
-              <div className="bg-white/5 h-4 rounded w-1/2"></div>
+              <div className="bg-bg-input h-4 rounded w-3/4"></div>
+              <div className="bg-bg-input h-4 rounded w-1/2"></div>
             </div>
           </div>
         ))}
@@ -39,9 +39,9 @@ export const ProductGrid: React.FC<ProductGridProps> = ({
 
   if (products.length === 0) {
     return (
-      <div className="p-12 text-center bg-[#15161b] border border-white/5 rounded-3xl space-y-3">
-        <p className="text-lg font-bold text-white">No Products Found</p>
-        <p className="text-xs text-gray-500">Try loosening your search keywords or price filters.</p>
+      <div className="p-12 text-center bg-bg-card border border-border-subtle rounded-3xl space-y-3">
+        <p className="text-lg font-bold text-text-main font-heading">No Products Found</p>
+        <p className="text-xs text-text-muted">Try loosening your search keywords or price filters.</p>
       </div>
     );
   }
@@ -54,7 +54,7 @@ export const ProductGrid: React.FC<ProductGridProps> = ({
         return (
           <div
             key={product.id}
-            className="bg-[#15161b] border border-white/5 hover:border-white/20 rounded-2xl p-5 flex flex-col justify-between group transition-all duration-300 relative"
+            className="bg-bg-card border border-border-subtle hover:border-brand-primary/20 rounded-2xl p-5 flex flex-col justify-between group transition-all duration-300 relative shadow-md"
           >
             {/* Top Wishlist badge */}
             <button
@@ -62,7 +62,7 @@ export const ProductGrid: React.FC<ProductGridProps> = ({
               className={`absolute top-4 right-4 p-2.5 rounded-full backdrop-blur-md transition-all z-10 ${
                 isWishlisted
                   ? "bg-red-500 text-white"
-                  : "bg-black/40 text-gray-400 hover:text-red-500 hover:bg-black/60"
+                  : "bg-bg-input text-text-muted hover:text-red-500"
               }`}
             >
               <FaHeart className="text-xs" />
@@ -72,7 +72,7 @@ export const ProductGrid: React.FC<ProductGridProps> = ({
               {/* Product Image */}
               <div
                 onClick={() => navigate(`/product/${product.id}`)}
-                className="w-full h-48 bg-black/20 rounded-xl mb-4 flex items-center justify-center p-4 cursor-pointer overflow-hidden relative"
+                className="w-full h-48 bg-bg-input rounded-xl mb-4 flex items-center justify-center p-4 cursor-pointer overflow-hidden relative"
               >
                 <img
                   src={
@@ -88,7 +88,7 @@ export const ProductGrid: React.FC<ProductGridProps> = ({
               {/* Title */}
               <h3 
                 onClick={() => navigate(`/product/${product.id}`)}
-                className="font-bold text-white group-hover:text-amber-500 transition-colors line-clamp-1 cursor-pointer"
+                className="font-heading font-bold text-text-main group-hover:text-brand-primary transition-colors line-clamp-1 cursor-pointer"
               >
                 {product.name}
               </h3>
@@ -96,12 +96,12 @@ export const ProductGrid: React.FC<ProductGridProps> = ({
               {/* Rating */}
               <div className="flex items-center gap-1 mt-1 mb-2">
                 {[1, 2, 3, 4, 5].map((s) => (
-                  <FaStar key={s} className="text-xs text-amber-500" />
+                  <FaStar key={s} className="text-xs text-brand-primary" />
                 ))}
-                <span className="text-[10px] text-gray-500 ml-1">(4.8)</span>
+                <span className="text-[10px] text-text-muted ml-1">(4.8)</span>
               </div>
 
-              <p className="text-xs text-gray-500 line-clamp-2 leading-relaxed mb-4">
+              <p className="text-xs text-text-muted line-clamp-2 leading-relaxed mb-4">
                 {product.desc || product.description}
               </p>
             </div>
@@ -116,9 +116,9 @@ export const ProductGrid: React.FC<ProductGridProps> = ({
               )}
 
               <div className="flex items-baseline justify-between mb-4">
-                <span className="text-xl font-extrabold text-white">₹{product.price}</span>
+                <span className="text-xl font-heading font-extrabold text-text-main">₹{product.price}</span>
                 {product.offerprice > 0 && (
-                  <span className="text-xs text-gray-500 line-through">₹{product.offerprice}</span>
+                  <span className="text-xs text-text-muted line-through">₹{product.offerprice}</span>
                 )}
               </div>
 
@@ -126,14 +126,14 @@ export const ProductGrid: React.FC<ProductGridProps> = ({
                 <button
                   onClick={() => handleAddToCart(product.id)}
                   disabled={addingId === product.id || product.stock === 0}
-                  className="flex-grow bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-black font-bold text-xs py-2.5 rounded-xl transition-all duration-300 flex items-center justify-center gap-1.5 cursor-pointer disabled:opacity-50"
+                  className="flex-grow bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-black font-extrabold text-xs py-2.5 rounded-xl transition-all duration-300 flex items-center justify-center gap-1.5 cursor-pointer disabled:opacity-50"
                 >
                   <FaShoppingCart />
                   {addingId === product.id ? "Adding..." : product.stock === 0 ? "Out of Stock" : "Add to Cart"}
                 </button>
                 <button
                   onClick={() => navigate(`/product/${product.id}`)}
-                  className="px-3 bg-white/5 hover:bg-white/10 text-white rounded-xl border border-white/10 text-xs"
+                  className="px-3 bg-bg-input hover:bg-bg-card text-text-main rounded-xl border border-border-subtle text-xs font-semibold"
                 >
                   View
                 </button>

@@ -96,10 +96,10 @@ function ProductDetail() {
 
   if (loading) {
     return (
-      <div className="bg-[#0b0c10] text-gray-200 min-h-screen flex flex-col justify-between">
+      <div className="bg-bg-base text-text-main min-h-screen flex flex-col justify-between">
         <Navbar />
         <div className="flex-grow flex items-center justify-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-amber-500"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-brand-primary"></div>
         </div>
         <Footer />
       </div>
@@ -108,12 +108,12 @@ function ProductDetail() {
 
   if (!product) {
     return (
-      <div className="bg-[#0b0c10] text-gray-200 min-h-screen flex flex-col justify-between">
+      <div className="bg-bg-base text-text-main min-h-screen flex flex-col justify-between">
         <Navbar />
         <main className="max-w-4xl mx-auto px-4 py-20 text-center flex-grow flex flex-col items-center justify-center">
-          <h2 className="text-2xl font-bold text-white">Product Not Found</h2>
-          <p className="text-sm text-gray-500 mt-2">The product you are looking for does not exist or has been removed.</p>
-          <Link to="/AllProducts" className="mt-6 px-6 py-2.5 bg-amber-500 text-black font-bold text-xs rounded-full">
+          <h2 className="text-2xl font-heading font-bold text-text-main">Product Not Found</h2>
+          <p className="text-sm text-text-muted mt-2">The product you are looking for does not exist or has been removed.</p>
+          <Link to="/AllProducts" className="mt-6 px-6 py-2.5 bg-brand-primary text-black font-bold text-xs rounded-full">
             Back to Shop
           </Link>
         </main>
@@ -125,7 +125,7 @@ function ProductDetail() {
   const imagesList = product.images && product.images.length > 0 ? product.images : [activeImg];
 
   return (
-    <div className="bg-[#0b0c10] text-gray-200 min-h-screen flex flex-col justify-between">
+    <div className="bg-bg-base text-text-main min-h-screen flex flex-col justify-between transition-colors duration-300">
       <Navbar />
 
       <main className="max-w-7xl w-full mx-auto px-4 sm:px-6 py-8 flex-grow space-y-12">
@@ -133,7 +133,7 @@ function ProductDetail() {
         {/* Back Link */}
         <button 
           onClick={() => navigate(-1)} 
-          className="text-xs text-gray-400 hover:text-white flex items-center gap-2 group transition"
+          className="text-xs text-text-muted hover:text-text-main flex items-center gap-2 group transition"
         >
           <FaArrowLeft className="group-hover:-translate-x-1 transition-transform" /> Back to Catalog
         </button>
@@ -143,7 +143,7 @@ function ProductDetail() {
           
           {/* Left Column: Image Gallery */}
           <div className="lg:col-span-6 space-y-4">
-            <div className="w-full h-96 sm:h-[450px] bg-[#15161b] border border-white/5 rounded-3xl p-6 flex items-center justify-center overflow-hidden relative shadow-2xl">
+            <div className="w-full h-96 sm:h-[450px] bg-bg-card border border-border-subtle rounded-3xl p-6 flex items-center justify-center overflow-hidden relative shadow-2xl">
               <img
                 src={activeImg}
                 alt={product.name}
@@ -158,8 +158,8 @@ function ProductDetail() {
                   <button
                     key={idx}
                     onClick={() => setActiveImg(img)}
-                    className={`w-20 h-20 rounded-xl bg-[#15161b] border p-2 flex items-center justify-center shrink-0 transition-all ${
-                      activeImg === img ? 'border-amber-500 scale-105' : 'border-white/5 hover:border-white/20'
+                    className={`w-20 h-20 rounded-xl bg-bg-card border p-2 flex items-center justify-center shrink-0 transition-all ${
+                      activeImg === img ? 'border-brand-primary scale-105' : 'border-border-subtle hover:border-text-muted'
                     }`}
                   >
                     <img src={img} alt="" className="max-h-full object-contain" />
@@ -174,19 +174,19 @@ function ProductDetail() {
             
             {/* Header info */}
             <div>
-              <span className="text-xs font-bold text-amber-500 uppercase tracking-widest bg-amber-500/10 px-3 py-1 rounded-full border border-amber-500/20">
+              <span className="text-xs font-extrabold text-brand-primary uppercase tracking-widest bg-brand-primary/10 px-3 py-1 rounded-full border border-brand-primary/20">
                 {product.category}
               </span>
-              <h1 className="text-3xl lg:text-4xl font-extrabold text-white tracking-tight mt-3 mb-2">{product.name}</h1>
+              <h1 className="text-3xl lg:text-4xl font-heading font-black text-text-main tracking-tight mt-3 mb-2">{product.name}</h1>
               
               <div className="flex items-center gap-4">
                 <div className="flex items-center gap-1">
                   {[1, 2, 3, 4, 5].map((s) => (
-                    <FaStar key={s} className="text-sm text-amber-500" />
+                    <FaStar key={s} className="text-sm text-brand-primary" />
                   ))}
-                  <span className="text-xs text-gray-400 ml-1">4.9 (120 reviews)</span>
+                  <span className="text-xs text-text-muted ml-1">4.9 (120 reviews)</span>
                 </div>
-                <span className="text-gray-600">|</span>
+                <span className="text-text-muted">|</span>
                 <span className={`text-xs font-bold ${product.stock > 0 ? 'text-green-400' : 'text-red-400'}`}>
                   {product.stock > 0 ? `In Stock (${product.stock} left)` : 'Out of Stock'}
                 </span>
@@ -194,18 +194,18 @@ function ProductDetail() {
             </div>
 
             {/* Price section */}
-            <div className="bg-[#15161b] border border-white/5 rounded-2xl p-5 flex items-center justify-between">
+            <div className="bg-bg-card border border-border-subtle rounded-2xl p-5 flex items-center justify-between">
               <div>
-                <p className="text-xs text-gray-500">Special Price</p>
+                <p className="text-xs text-text-muted">Special Price</p>
                 <div className="flex items-baseline gap-3 mt-1">
-                  <span className="text-3xl font-black text-white">₹{product.price}</span>
+                  <span className="text-3xl font-heading font-black text-text-main">₹{product.price}</span>
                   {product.offerprice > 0 && (
-                    <span className="text-base text-gray-500 line-through">₹{product.offerprice}</span>
+                    <span className="text-base text-text-muted line-through">₹{product.offerprice}</span>
                   )}
                 </div>
               </div>
               {product.offer && (
-                <div className="bg-amber-500 text-black px-4 py-1.5 rounded-lg text-xs font-black flex items-center gap-1.5">
+                <div className="bg-brand-primary text-black px-4 py-1.5 rounded-lg text-xs font-black flex items-center gap-1.5">
                   <FaTag /> {product.offer}
                 </div>
               )}
@@ -213,25 +213,25 @@ function ProductDetail() {
 
             {/* Description */}
             <div className="space-y-2">
-              <h3 className="text-sm font-bold text-white uppercase tracking-wider">Product Highlights</h3>
-              <p className="text-sm text-gray-400 leading-relaxed font-light">{product.desc || product.description}</p>
+              <h3 className="text-sm font-heading font-bold text-text-main uppercase tracking-wider">Product Highlights</h3>
+              <p className="text-sm text-text-muted leading-relaxed font-light">{product.desc || product.description}</p>
             </div>
 
             {/* Quantity Selector */}
             {product.stock > 0 && (
-              <div className="flex items-center gap-4 border-b border-white/5 pb-6">
-                <span className="text-sm font-bold text-white uppercase tracking-wider">Quantity:</span>
-                <div className="flex items-center bg-[#15161b] border border-white/10 rounded-full px-2">
+              <div className="flex items-center gap-4 border-b border-border-subtle pb-6">
+                <span className="text-sm font-bold text-text-main uppercase tracking-wider">Quantity:</span>
+                <div className="flex items-center bg-bg-input border border-border-subtle rounded-full px-2">
                   <button 
                     onClick={() => setQuantity(prev => Math.max(1, prev - 1))}
-                    className="w-10 h-10 flex items-center justify-center text-lg hover:text-amber-500 transition-colors"
+                    className="w-10 h-10 flex items-center justify-center text-lg hover:text-brand-primary transition-colors text-text-main"
                   >
                     -
                   </button>
-                  <span className="w-10 text-center text-sm font-bold">{quantity}</span>
+                  <span className="w-10 text-center text-sm font-bold text-text-main">{quantity}</span>
                   <button 
                     onClick={() => setQuantity(prev => Math.min(product.stock, prev + 1))}
-                    className="w-10 h-10 flex items-center justify-center text-lg hover:text-amber-500 transition-colors"
+                    className="w-10 h-10 flex items-center justify-center text-lg hover:text-brand-primary transition-colors text-text-main"
                   >
                     +
                   </button>
@@ -245,7 +245,7 @@ function ProductDetail() {
                 <>
                   <button
                     onClick={handleBuyNow}
-                    className="flex-1 py-4 bg-white text-black hover:bg-amber-500 hover:text-black font-extrabold text-sm rounded-full transition transform hover:-translate-y-0.5 active:translate-y-0 shadow-lg text-center cursor-pointer"
+                    className="flex-1 py-4 bg-bg-card text-text-main border border-border-subtle hover:bg-brand-primary hover:text-black font-extrabold text-sm rounded-full transition transform hover:-translate-y-0.5 active:translate-y-0 shadow-lg text-center cursor-pointer"
                   >
                     BUY NOW
                   </button>
@@ -261,7 +261,7 @@ function ProductDetail() {
               ) : (
                 <button
                   disabled
-                  className="w-full py-4 bg-white/5 text-gray-500 font-extrabold text-sm rounded-full cursor-not-allowed border border-white/5"
+                  className="w-full py-4 bg-bg-input text-text-muted font-extrabold text-sm rounded-full cursor-not-allowed border border-border-subtle"
                 >
                   OUT OF STOCK
                 </button>
@@ -272,7 +272,7 @@ function ProductDetail() {
                 className={`p-4 rounded-full border transition flex items-center justify-center ${
                   inWishlist 
                     ? "bg-red-500/10 border-red-500/30 text-red-500" 
-                    : "border-white/10 text-gray-400 hover:border-red-500 hover:text-red-500"
+                    : "border-border-subtle text-text-muted hover:border-red-500 hover:text-red-500"
                 }`}
                 aria-label="Add to wishlist"
               >
@@ -281,19 +281,19 @@ function ProductDetail() {
             </div>
 
             {/* Badges Info */}
-            <div className="grid grid-cols-2 gap-4 border-t border-white/5 pt-6 text-xs text-gray-400">
+            <div className="grid grid-cols-2 gap-4 border-t border-border-subtle pt-6 text-xs text-text-muted">
               <div className="flex items-center gap-3">
-                <FaTruck className="text-amber-500 text-base" />
+                <FaTruck className="text-brand-primary text-base" />
                 <div>
-                  <p className="font-bold text-gray-300">Free Secure Shipping</p>
-                  <p className="text-[10px] text-gray-500">Delivered within 3-5 days</p>
+                  <p className="font-bold text-text-main">Free Secure Shipping</p>
+                  <p className="text-[10px] text-text-muted">Delivered within 3-5 days</p>
                 </div>
               </div>
               <div className="flex items-center gap-3">
-                <FaUndo className="text-amber-500 text-base" />
+                <FaUndo className="text-brand-primary text-base" />
                 <div>
-                  <p className="font-bold text-gray-300">7-Day Easy Returns</p>
-                  <p className="text-[10px] text-gray-500">100% money back guarantee</p>
+                  <p className="font-bold text-text-main">7-Day Easy Returns</p>
+                  <p className="text-[10px] text-text-muted">100% money back guarantee</p>
                 </div>
               </div>
             </div>
@@ -303,29 +303,29 @@ function ProductDetail() {
 
         {/* Related Products */}
         {related.length > 0 && (
-          <section className="border-t border-white/5 pt-12">
-            <h2 className="text-xl sm:text-2xl font-extrabold text-white tracking-tight mb-8">YOU MAY ALSO LIKE</h2>
+          <section className="border-t border-border-subtle pt-12">
+            <h2 className="text-xl sm:text-2xl font-heading font-extrabold text-text-main tracking-tight mb-8">YOU MAY ALSO LIKE</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
               {related.map((prod) => (
                 <div 
                   key={prod.id}
                   onClick={() => navigate(`/product/${prod.id}`)}
-                  className="bg-[#15161b] border border-white/5 rounded-2xl p-4 flex flex-col justify-between hover:border-amber-500/20 transition duration-300 cursor-pointer shadow-lg group"
+                  className="bg-bg-card border border-border-subtle rounded-2xl p-4 flex flex-col justify-between hover:border-brand-primary/20 transition duration-300 cursor-pointer shadow-lg group"
                 >
                   <div>
-                    <div className="w-full h-36 flex items-center justify-center bg-black/20 rounded-xl mb-3 overflow-hidden p-2">
+                    <div className="w-full h-36 flex items-center justify-center bg-bg-input rounded-xl mb-3 overflow-hidden p-2">
                       <img 
                         src={prod.images && prod.images.length > 0 ? prod.images[0] : "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?q=80&w=600&auto=format&fit=crop"} 
                         alt={prod.name} 
                         className="max-h-28 object-contain group-hover:scale-105 transition duration-300"
                       />
                     </div>
-                    <h3 className="font-bold text-white group-hover:text-amber-500 transition-colors truncate text-sm">{prod.name}</h3>
-                    <p className="text-xs text-gray-500 line-clamp-1 mt-1">{prod.desc || prod.description}</p>
+                    <h3 className="font-heading font-bold text-text-main group-hover:text-brand-primary transition-colors truncate text-sm">{prod.name}</h3>
+                    <p className="text-xs text-text-muted line-clamp-1 mt-1">{prod.desc || prod.description}</p>
                   </div>
                   <div className="flex justify-between items-baseline mt-4">
-                    <span className="font-bold text-white text-sm">₹{prod.price}</span>
-                    <span className="text-[10px] text-amber-500 font-bold uppercase">{prod.category}</span>
+                    <span className="font-heading font-bold text-text-main text-sm">₹{prod.price}</span>
+                    <span className="text-[10px] text-brand-primary font-bold uppercase">{prod.category}</span>
                   </div>
                 </div>
               ))}

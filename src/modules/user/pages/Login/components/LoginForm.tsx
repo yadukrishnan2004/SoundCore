@@ -23,8 +23,8 @@ export const LoginForm: React.FC<LoginFormProps> = ({
   return (
     <form onSubmit={handleLoginSubmit} className="space-y-6">
       <div>
-        <h3 className="text-2xl font-black text-white">Welcome Back</h3>
-        <p className="text-xs text-gray-500 mt-1">Sign in to your SoundCore account</p>
+        <h3 className="text-2xl font-heading font-black text-text-main">Welcome Back</h3>
+        <p className="text-xs text-text-muted mt-1">Sign in to your SoundCore account</p>
       </div>
 
       <div className="space-y-4">
@@ -35,9 +35,9 @@ export const LoginForm: React.FC<LoginFormProps> = ({
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
-            className="w-full bg-[#0b0c10] text-sm text-gray-200 pl-11 pr-4 py-3 rounded-xl border border-white/5 focus:outline-none focus:border-amber-500"
+            className="w-full bg-bg-base text-sm text-text-main pl-11 pr-4 py-3 rounded-xl border border-border-subtle focus:outline-none focus:border-brand-primary"
           />
-          <FaEnvelope className="absolute left-4 top-4 text-gray-600 text-sm" />
+          <FaEnvelope className="absolute left-4 top-4 text-text-muted text-sm" />
         </div>
 
         <div className="relative">
@@ -47,9 +47,9 @@ export const LoginForm: React.FC<LoginFormProps> = ({
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
-            className="w-full bg-[#0b0c10] text-sm text-gray-200 pl-11 pr-4 py-3 rounded-xl border border-white/5 focus:outline-none focus:border-amber-500"
+            className="w-full bg-bg-base text-sm text-text-main pl-11 pr-4 py-3 rounded-xl border border-border-subtle focus:outline-none focus:border-brand-primary"
           />
-          <FaLock className="absolute left-4 top-4 text-gray-600 text-sm" />
+          <FaLock className="absolute left-4 top-4 text-text-muted text-sm" />
         </div>
       </div>
 
@@ -57,7 +57,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({
         <button
           type="button"
           onClick={() => switchMode('forgot')}
-          className="text-xs text-amber-500 hover:underline font-bold"
+          className="text-xs text-brand-primary hover:underline font-bold"
         >
           Forgot Password?
         </button>
@@ -71,12 +71,12 @@ export const LoginForm: React.FC<LoginFormProps> = ({
         {loading ? "Signing in..." : "LOG IN"}
       </button>
 
-      <p className="text-xs text-center text-gray-500">
+      <p className="text-xs text-center text-text-muted">
         Don't have an account?{" "}
         <button
           type="button"
           onClick={() => switchMode('register')}
-          className="text-amber-500 font-bold hover:underline"
+          className="text-brand-primary font-bold hover:underline"
         >
           Create account
         </button>

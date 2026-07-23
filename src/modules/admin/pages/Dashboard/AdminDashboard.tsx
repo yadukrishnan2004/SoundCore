@@ -44,18 +44,18 @@ function AdminDashboard() {
   } = useAdminDashboard();
 
   return (
-    <div className="bg-[#0b0c10] text-gray-200 min-h-screen flex flex-col justify-between">
+    <div className="bg-bg-base text-text-main min-h-screen flex flex-col justify-between transition-colors duration-300">
       <Navbar />
 
       <main className="max-w-7xl w-full mx-auto px-4 sm:px-6 py-10 flex-grow grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
         
         {/* Left Sidebar */}
-        <aside className="lg:col-span-3 bg-[#15161b] border border-white/5 rounded-3xl p-6 space-y-2">
-          <h2 className="text-sm font-bold text-gray-500 uppercase tracking-widest px-4 pb-4 border-b border-white/5 mb-4">Admin Console</h2>
+        <aside className="lg:col-span-3 bg-bg-card border border-border-subtle rounded-3xl p-6 space-y-2">
+          <h2 className="text-sm font-heading font-bold text-text-muted uppercase tracking-widest px-4 pb-4 border-b border-border-subtle mb-4">Admin Console</h2>
           <button
             onClick={() => setActiveTab('analytics')}
             className={`w-full py-3 px-4 rounded-xl font-semibold text-sm flex items-center gap-3 transition ${
-              activeTab === 'analytics' ? 'bg-amber-500 text-black' : 'text-gray-400 hover:bg-white/5'
+              activeTab === 'analytics' ? 'bg-brand-primary text-black font-extrabold' : 'text-text-muted hover:bg-bg-input'
             }`}
           >
             <FaChartBar /> KPI Analytics
@@ -63,7 +63,7 @@ function AdminDashboard() {
           <button
             onClick={() => setActiveTab('products')}
             className={`w-full py-3 px-4 rounded-xl font-semibold text-sm flex items-center gap-3 transition ${
-              activeTab === 'products' ? 'bg-amber-500 text-black' : 'text-gray-400 hover:bg-white/5'
+              activeTab === 'products' ? 'bg-brand-primary text-black font-extrabold' : 'text-text-muted hover:bg-bg-input'
             }`}
           >
             <FaBox /> Inventory & Products
@@ -71,7 +71,7 @@ function AdminDashboard() {
           <button
             onClick={() => setActiveTab('categories')}
             className={`w-full py-3 px-4 rounded-xl font-semibold text-sm flex items-center gap-3 transition ${
-              activeTab === 'categories' ? 'bg-amber-500 text-black' : 'text-gray-400 hover:bg-white/5'
+              activeTab === 'categories' ? 'bg-brand-primary text-black font-extrabold' : 'text-text-muted hover:bg-bg-input'
             }`}
           >
             <FaTags /> Categories
@@ -79,7 +79,7 @@ function AdminDashboard() {
           <button
             onClick={() => setActiveTab('orders')}
             className={`w-full py-3 px-4 rounded-xl font-semibold text-sm flex items-center gap-3 transition ${
-              activeTab === 'orders' ? 'bg-amber-500 text-black' : 'text-gray-400 hover:bg-white/5'
+              activeTab === 'orders' ? 'bg-brand-primary text-black font-extrabold' : 'text-text-muted hover:bg-bg-input'
             }`}
           >
             <FaShoppingBag /> Orders Lifecycle
@@ -87,7 +87,7 @@ function AdminDashboard() {
           <button
             onClick={() => setActiveTab('users')}
             className={`w-full py-3 px-4 rounded-xl font-semibold text-sm flex items-center gap-3 transition ${
-              activeTab === 'users' ? 'bg-amber-500 text-black' : 'text-gray-400 hover:bg-white/5'
+              activeTab === 'users' ? 'bg-brand-primary text-black font-extrabold' : 'text-text-muted hover:bg-bg-input'
             }`}
           >
             <FaUsers /> Customer Accounts
@@ -95,9 +95,9 @@ function AdminDashboard() {
         </aside>
 
         {/* Main Content Area */}
-        <div className="lg:col-span-9 bg-[#15161b] border border-white/5 rounded-3xl p-6 sm:p-8 min-h-[500px]">
+        <div className="lg:col-span-9 bg-bg-card border border-border-subtle rounded-3xl p-6 sm:p-8 min-h-[500px]">
           {loading && (
-            <div className="py-20 text-center text-gray-500 font-semibold animate-pulse">
+            <div className="py-20 text-center text-text-muted font-semibold animate-pulse">
               Syncing backend records...
             </div>
           )}

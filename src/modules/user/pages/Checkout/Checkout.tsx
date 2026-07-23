@@ -43,10 +43,10 @@ function Checkout() {
 
   if (loading) {
     return (
-      <div className="bg-[#0b0c10] text-white min-h-screen flex flex-col justify-between">
+      <div className="bg-bg-base text-text-main min-h-screen flex flex-col justify-between">
         <Navbar />
         <div className="flex-grow flex items-center justify-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-amber-500"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-brand-primary"></div>
         </div>
         <Footer />
       </div>
@@ -54,18 +54,18 @@ function Checkout() {
   }
 
   return (
-    <div className="bg-[#0b0c10] text-gray-200 min-h-screen flex flex-col justify-between">
+    <div className="bg-bg-base text-text-main min-h-screen flex flex-col justify-between transition-colors duration-300">
       <Navbar />
 
       <main className="max-w-7xl w-full mx-auto px-4 sm:px-6 py-10 flex-grow space-y-8">
         <div>
-          <h1 className="text-3xl font-extrabold text-white tracking-tight">Express Checkout</h1>
-          <p className="text-xs text-gray-400 mt-1">Review shipping details, payment preferences, and complete your purchase</p>
+          <h1 className="text-3xl font-heading font-extrabold text-text-main tracking-tight">Express Checkout</h1>
+          <p className="text-xs text-text-muted mt-1">Review shipping details, payment preferences, and complete your purchase</p>
         </div>
 
         {items.length === 0 ? (
-          <div className="p-12 text-center bg-[#15161b] rounded-3xl border border-white/5 space-y-4">
-            <p className="text-base text-gray-400 font-bold">Your checkout bag is currently empty.</p>
+          <div className="p-12 text-center bg-bg-card rounded-3xl border border-border-subtle space-y-4">
+            <p className="text-base text-text-muted font-bold">Your checkout bag is currently empty.</p>
           </div>
         ) : (
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">

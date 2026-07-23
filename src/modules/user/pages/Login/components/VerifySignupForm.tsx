@@ -21,8 +21,8 @@ export const VerifySignupForm: React.FC<VerifySignupFormProps> = ({
   return (
     <form onSubmit={handleVerifySignupSubmit} className="space-y-6">
       <div>
-        <h3 className="text-2xl font-black text-white">Verify Email</h3>
-        <p className="text-xs text-gray-500 mt-1">We sent a 6-digit OTP verification code to {email}</p>
+        <h3 className="text-2xl font-heading font-black text-text-main">Verify Email</h3>
+        <p className="text-xs text-text-muted mt-1">We sent a 6-digit OTP verification code to {email}</p>
       </div>
 
       <div className="space-y-4">
@@ -34,7 +34,7 @@ export const VerifySignupForm: React.FC<VerifySignupFormProps> = ({
             value={otp}
             onChange={(e) => setOtp(e.target.value)}
             required
-            className="w-full bg-[#0b0c10] text-center tracking-[1em] text-lg text-white font-extrabold py-3 rounded-xl border border-white/5 focus:outline-none focus:border-amber-500"
+            className="w-full bg-bg-base text-center tracking-[1em] text-lg text-text-main font-extrabold py-3 rounded-xl border border-border-subtle focus:outline-none focus:border-brand-primary"
           />
         </div>
       </div>
@@ -42,7 +42,7 @@ export const VerifySignupForm: React.FC<VerifySignupFormProps> = ({
       <button
         type="submit"
         disabled={loading}
-        className="w-full py-3.5 bg-amber-500 hover:bg-amber-600 text-black font-extrabold rounded-xl transition cursor-pointer disabled:opacity-50"
+        className="w-full py-3.5 bg-brand-primary hover:bg-brand-hover text-black font-extrabold rounded-xl transition cursor-pointer disabled:opacity-50"
       >
         {loading ? "Verifying..." : "VERIFY CODE"}
       </button>
@@ -50,7 +50,7 @@ export const VerifySignupForm: React.FC<VerifySignupFormProps> = ({
       <button
         type="button"
         onClick={() => switchMode('register')}
-        className="w-full py-2.5 bg-white/5 text-xs text-gray-400 rounded-xl hover:bg-white/10 flex items-center justify-center gap-2"
+        className="w-full py-2.5 bg-bg-card text-xs text-text-muted rounded-xl hover:bg-bg-base flex items-center justify-center gap-2 border border-border-subtle"
       >
         <FaArrowLeft /> Back to Signup
       </button>

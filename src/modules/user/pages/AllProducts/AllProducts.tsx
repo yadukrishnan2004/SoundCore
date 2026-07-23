@@ -35,23 +35,23 @@ function Allproduct() {
   } = useAllProducts();
 
   return (
-    <div className="bg-[#0b0c10] text-gray-200 min-h-screen flex flex-col justify-between">
+    <div className="bg-bg-base text-text-main min-h-screen flex flex-col justify-between transition-colors duration-300">
       <Navbar />
 
       <main className="max-w-7xl w-full mx-auto px-4 sm:px-6 py-6 flex-grow">
         
         {/* Header Options */}
-        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b border-white/5 pb-4 mb-6 gap-4">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b border-border-subtle pb-4 mb-6 gap-4">
           <div>
-            <h1 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">EXPLORE CATALOG</h1>
-            <p className="text-xs text-gray-500 mt-1">Found {products.length} premium audio systems</p>
+            <h1 className="text-2xl sm:text-3xl font-heading font-extrabold text-text-main tracking-tight">EXPLORE CATALOG</h1>
+            <p className="text-xs text-text-muted mt-1">Found {products.length} premium audio systems</p>
           </div>
 
           <div className="flex items-center gap-3 w-full sm:w-auto">
             {/* Mobile filter toggle */}
             <button
               onClick={() => setShowMobileFilters(true)}
-              className="lg:hidden flex items-center justify-center gap-2 px-4 py-2 bg-[#15161b] border border-white/5 rounded-lg text-sm w-full"
+              className="lg:hidden flex items-center justify-center gap-2 px-4 py-2 bg-bg-card border border-border-subtle rounded-lg text-sm w-full text-text-main"
             >
               <FaSlidersH /> Filters
             </button>
@@ -69,7 +69,7 @@ function Allproduct() {
                 }
                 setSearchParams(current);
               }}
-              className="bg-[#15161b] text-gray-300 text-sm px-4 py-2 rounded-lg border border-white/5 focus:outline-none focus:border-amber-500 w-full sm:w-48"
+              className="bg-bg-card text-text-main text-sm px-4 py-2 rounded-lg border border-border-subtle focus:outline-none focus:border-brand-primary w-full sm:w-48"
             >
               <option value="default">Sort: Default</option>
               <option value="price_asc">Price: Low to High</option>

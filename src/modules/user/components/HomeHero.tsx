@@ -61,8 +61,8 @@ function Hero() {
 
   if (loading || products.length === 0) {
     return (
-      <section className="relative w-full h-[500px] sm:h-[600px] bg-[#0b0c10] flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-amber-500"></div>
+      <section className="relative w-full h-[500px] sm:h-[600px] bg-bg-base flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-brand-primary"></div>
       </section>
     );
   }
@@ -70,7 +70,7 @@ function Hero() {
   const currentItem = products[currslide];
 
   return (
-    <section className="relative w-full h-[500px] sm:h-[600px] bg-[#0b0c10] overflow-hidden flex items-center justify-center px-4 sm:px-8 border-b border-white/5">
+    <section className="relative w-full h-[500px] sm:h-[600px] bg-bg-base overflow-hidden flex items-center justify-center px-4 sm:px-8 border-b border-border-subtle transition-colors duration-300">
       <AnimatePresence mode="wait">
         <motion.div
           key={currentItem.id}
@@ -86,7 +86,7 @@ function Hero() {
               variants={slideRight(0.2)}
               initial="hidden"
               animate="visible"
-              className="inline-flex items-center gap-2 bg-amber-500/10 border border-amber-500/20 px-3.5 py-1 rounded-full text-amber-500 text-xs font-black uppercase tracking-widest"
+              className="inline-flex items-center gap-2 bg-brand-primary/10 border border-brand-primary/20 px-3.5 py-1 rounded-full text-brand-primary text-xs font-black uppercase tracking-widest"
             >
               <FaPlay className="text-[10px]" /> Featured Flagship Acoustic
             </motion.div>
@@ -95,7 +95,7 @@ function Hero() {
               variants={slideRight(0.4)}
               initial="hidden"
               animate="visible"
-              className="text-4xl sm:text-6xl font-black text-white tracking-tight leading-none capitalize"
+              className="text-4xl sm:text-6xl font-heading font-black text-text-main tracking-tight leading-none capitalize"
             >
               {currentItem.name}
             </motion.h1>
@@ -104,7 +104,7 @@ function Hero() {
               variants={slideRight(0.6)}
               initial="hidden"
               animate="visible"
-              className="text-sm sm:text-base text-gray-400 line-clamp-2 max-w-xl font-light leading-relaxed mx-auto md:mx-0"
+              className="text-sm sm:text-base text-text-muted line-clamp-2 max-w-xl font-light leading-relaxed mx-auto md:mx-0"
             >
               {currentItem.desc || currentItem.description || "Immerse yourself in precision tuned spatial drivers and active noise suppression."}
             </motion.p>
@@ -125,7 +125,7 @@ function Hero() {
 
               <button
                 onClick={() => navigate(`/product/${currentItem.id}`)}
-                className="px-6 py-3.5 bg-white/5 hover:bg-white/10 text-white font-bold text-xs rounded-full border border-white/10 transition flex items-center gap-2"
+                className="px-6 py-3.5 bg-bg-card hover:bg-bg-input text-text-main font-bold text-xs rounded-full border border-border-subtle transition flex items-center gap-2"
               >
                 <FaInfoCircle /> View Specs
               </button>
@@ -140,7 +140,7 @@ function Hero() {
               transition={{ duration: 0.6 }}
               className="relative w-72 h-72 sm:w-96 sm:h-96 flex items-center justify-center"
             >
-              <div className="absolute inset-0 bg-amber-500/10 rounded-full blur-3xl -z-10"></div>
+              <div className="absolute inset-0 bg-brand-primary/10 rounded-full blur-3xl -z-10"></div>
               <img
                 src={
                   currentItem.images?.[0] ||
@@ -159,13 +159,13 @@ function Hero() {
       <div className="absolute bottom-6 right-6 sm:right-12 flex items-center gap-2 z-20">
         <button
           onClick={() => setCurrslide((prev) => (prev === 0 ? products.length - 1 : prev - 1))}
-          className="text-gray-500 hover:text-amber-500 text-3xl transition"
+          className="text-text-muted hover:text-brand-primary text-3xl transition"
         >
           <HiArrowCircleLeft />
         </button>
         <button
           onClick={() => setCurrslide((prev) => (prev + 1) % products.length)}
-          className="text-gray-500 hover:text-amber-500 text-3xl transition"
+          className="text-text-muted hover:text-brand-primary text-3xl transition"
         >
           <HiArrowCircleRight />
         </button>

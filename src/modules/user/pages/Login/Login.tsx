@@ -34,17 +34,17 @@ function Login() {
   } = useAuthForms();
 
   return (
-    <div className="bg-[#0b0c10] text-gray-200 min-h-screen flex flex-col justify-between">
+    <div className="bg-bg-base text-text-main min-h-screen flex flex-col justify-between transition-colors duration-300">
       <Navbar />
 
       <main className="max-w-5xl w-full mx-auto px-4 sm:px-6 py-10 flex-grow flex items-center justify-center">
-        <div className="w-full bg-[#15161b] border border-white/5 rounded-3xl overflow-hidden grid grid-cols-1 md:grid-cols-12 shadow-2xl min-h-[500px]">
+        <div className="w-full bg-bg-card border border-border-subtle rounded-3xl overflow-hidden grid grid-cols-1 md:grid-cols-12 shadow-2xl min-h-[500px]">
           
           {/* Left Column: Branding */}
           <div className="md:col-span-5 bg-gradient-to-br from-amber-500 to-orange-600 p-8 flex flex-col justify-between text-black text-center md:text-left">
             <div>
-              <span className="font-extrabold tracking-widest text-xs uppercase border-b border-black/20 pb-1">SoundCore Hub</span>
-              <h2 className="text-3xl font-black tracking-tight mt-6 leading-tight">THE ULTIMATE ACOUSTIC IMMERSION</h2>
+              <span className="font-extrabold tracking-widest text-xs uppercase border-b border-black/20 pb-1 font-heading">SoundCore Hub</span>
+              <h2 className="text-3xl font-heading font-black tracking-tight mt-6 leading-tight">THE ULTIMATE ACOUSTIC IMMERSION</h2>
               <p className="text-sm font-medium mt-4 opacity-90 leading-relaxed">
                 Log in to sync your cart, save premium speakers to your wishlist, and track your active deliveries.
               </p>
@@ -56,7 +56,7 @@ function Login() {
           </div>
 
           {/* Right Column: Dynamic Form Panel */}
-          <div className="md:col-span-7 p-8 sm:p-12 flex flex-col justify-center bg-[#131419]">
+          <div className="md:col-span-7 p-8 sm:p-12 flex flex-col justify-center bg-bg-input">
             
             {/* Display Messages */}
             {error && (

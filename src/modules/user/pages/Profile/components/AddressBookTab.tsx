@@ -50,13 +50,13 @@ export const AddressBookTab: React.FC<AddressBookTabProps> = ({
     <div className="space-y-6">
       <div className="flex justify-between items-center">
         <div>
-          <h3 className="text-xl font-bold text-white">Saved Delivery Addresses</h3>
-          <p className="text-xs text-gray-500 mt-1">Manage destination locations for express checkout</p>
+          <h3 className="text-xl font-heading font-bold text-text-main">Saved Delivery Addresses</h3>
+          <p className="text-xs text-text-muted mt-1">Manage destination locations for express checkout</p>
         </div>
         {!showAddressForm && (
           <button
             onClick={() => setShowAddressForm(true)}
-            className="text-xs bg-amber-500 text-black px-4 py-2 rounded-xl font-bold flex items-center gap-1.5"
+            className="text-xs bg-brand-primary text-black px-4 py-2 rounded-xl font-bold flex items-center gap-1.5 cursor-pointer"
           >
             <FaPlus /> Add Address
           </button>
@@ -64,8 +64,8 @@ export const AddressBookTab: React.FC<AddressBookTabProps> = ({
       </div>
 
       {showAddressForm ? (
-        <form onSubmit={handleAddAddress} className="space-y-4 bg-black/20 p-6 rounded-2xl border border-white/5">
-          <h4 className="text-sm font-bold text-white uppercase tracking-wider">Add New Address</h4>
+        <form onSubmit={handleAddAddress} className="space-y-4 bg-bg-input p-6 rounded-2xl border border-border-subtle">
+          <h4 className="text-sm font-heading font-bold text-text-main uppercase tracking-wider">Add New Address</h4>
           
           {addressError && <p className="text-xs font-bold text-red-500">{addressError}</p>}
 
@@ -76,7 +76,7 @@ export const AddressBookTab: React.FC<AddressBookTabProps> = ({
               value={addrName}
               onChange={(e) => setAddrName(e.target.value)}
               required
-              className="bg-[#0b0c10] text-sm text-gray-200 px-4 py-2.5 rounded-xl border border-white/5 focus:outline-none focus:border-amber-500"
+              className="bg-bg-base text-sm text-text-main px-4 py-2.5 rounded-xl border border-border-subtle focus:outline-none focus:border-brand-primary"
             />
             <input
               type="text"
@@ -84,7 +84,7 @@ export const AddressBookTab: React.FC<AddressBookTabProps> = ({
               value={addrPhone}
               onChange={(e) => setAddrPhone(e.target.value)}
               required
-              className="bg-[#0b0c10] text-sm text-gray-200 px-4 py-2.5 rounded-xl border border-white/5 focus:outline-none focus:border-amber-500"
+              className="bg-bg-base text-sm text-text-main px-4 py-2.5 rounded-xl border border-border-subtle focus:outline-none focus:border-brand-primary"
             />
           </div>
 
@@ -95,7 +95,7 @@ export const AddressBookTab: React.FC<AddressBookTabProps> = ({
               value={addrHouseName}
               onChange={(e) => setAddrHouseName(e.target.value)}
               required
-              className="bg-[#0b0c10] text-sm text-gray-200 px-4 py-2.5 rounded-xl border border-white/5 focus:outline-none focus:border-amber-500"
+              className="bg-bg-base text-sm text-text-main px-4 py-2.5 rounded-xl border border-border-subtle focus:outline-none focus:border-brand-primary"
             />
             <input
               type="text"
@@ -103,7 +103,7 @@ export const AddressBookTab: React.FC<AddressBookTabProps> = ({
               value={addrStreet}
               onChange={(e) => setAddrStreet(e.target.value)}
               required
-              className="bg-[#0b0c10] text-sm text-gray-200 px-4 py-2.5 rounded-xl border border-white/5 focus:outline-none focus:border-amber-500"
+              className="bg-bg-base text-sm text-text-main px-4 py-2.5 rounded-xl border border-border-subtle focus:outline-none focus:border-brand-primary"
             />
           </div>
 
@@ -114,7 +114,7 @@ export const AddressBookTab: React.FC<AddressBookTabProps> = ({
               value={addrCity}
               onChange={(e) => setAddrCity(e.target.value)}
               required
-              className="bg-[#0b0c10] text-sm text-gray-200 px-4 py-2.5 rounded-xl border border-white/5 focus:outline-none focus:border-amber-500"
+              className="bg-bg-base text-sm text-text-main px-4 py-2.5 rounded-xl border border-border-subtle focus:outline-none focus:border-brand-primary"
             />
             <input
               type="text"
@@ -122,7 +122,7 @@ export const AddressBookTab: React.FC<AddressBookTabProps> = ({
               value={addrState}
               onChange={(e) => setAddrState(e.target.value)}
               required
-              className="bg-[#0b0c10] text-sm text-gray-200 px-4 py-2.5 rounded-xl border border-white/5 focus:outline-none focus:border-amber-500"
+              className="bg-bg-base text-sm text-text-main px-4 py-2.5 rounded-xl border border-border-subtle focus:outline-none focus:border-brand-primary"
             />
             <input
               type="text"
@@ -130,39 +130,39 @@ export const AddressBookTab: React.FC<AddressBookTabProps> = ({
               value={addrPin}
               onChange={(e) => setAddrPin(e.target.value)}
               required
-              className="bg-[#0b0c10] text-sm text-gray-200 px-4 py-2.5 rounded-xl border border-white/5 focus:outline-none focus:border-amber-500"
+              className="bg-bg-base text-sm text-text-main px-4 py-2.5 rounded-xl border border-border-subtle focus:outline-none focus:border-brand-primary"
             />
           </div>
 
           <div className="flex gap-3 pt-2">
-            <button type="submit" className="px-6 py-2.5 bg-amber-500 text-black font-extrabold text-xs rounded-xl">
+            <button type="submit" className="px-6 py-2.5 bg-brand-primary text-black font-extrabold text-xs rounded-xl">
               Save Address
             </button>
-            <button type="button" onClick={() => setShowAddressForm(false)} className="px-6 py-2.5 bg-white/5 text-gray-400 font-bold text-xs rounded-xl">
+            <button type="button" onClick={() => setShowAddressForm(false)} className="px-6 py-2.5 bg-bg-card text-text-muted font-bold text-xs rounded-xl border border-border-subtle">
               Cancel
             </button>
           </div>
         </form>
       ) : loadingAddresses ? (
         <div className="py-12 flex justify-center">
-          <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-amber-500"></div>
+          <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-brand-primary"></div>
         </div>
       ) : addresses.length === 0 ? (
-        <div className="p-8 text-center bg-black/20 rounded-2xl border border-white/5 border-dashed">
-          <p className="text-sm text-gray-500">No saved addresses found. Click Add Address to start shipping.</p>
+        <div className="p-8 text-center bg-bg-input rounded-2xl border border-border-subtle border-dashed">
+          <p className="text-sm text-text-muted">No saved addresses found. Click Add Address to start shipping.</p>
         </div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {addresses.map((addr) => (
-            <div key={addr.id} className="p-5 bg-black/20 border border-white/5 rounded-2xl">
-              <p className="text-sm font-bold text-white">{addr.name}</p>
-              <p className="text-xs text-gray-400 mt-2">
+            <div key={addr.id} className="p-5 bg-bg-input border border-border-subtle rounded-2xl">
+              <p className="text-sm font-bold text-text-main">{addr.name}</p>
+              <p className="text-xs text-text-muted mt-2">
                 {addr.house_name}, {addr.street}
               </p>
-              <p className="text-xs text-gray-400">
+              <p className="text-xs text-text-muted">
                 {addr.city}, {addr.state} - {addr.pin_code}
               </p>
-              <p className="text-[10px] text-gray-500 font-semibold mt-4">📞 {addr.phone}</p>
+              <p className="text-[10px] text-text-muted font-semibold mt-4">📞 {addr.phone}</p>
             </div>
           ))}
         </div>

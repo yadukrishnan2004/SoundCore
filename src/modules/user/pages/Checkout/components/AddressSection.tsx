@@ -49,15 +49,15 @@ export const AddressSection: React.FC<AddressSectionProps> = ({
   handleAddAddress
 }) => {
   return (
-    <section className="bg-[#15161b] border border-white/5 rounded-3xl p-6">
+    <section className="bg-bg-card border border-border-subtle rounded-3xl p-6">
       <div className="flex justify-between items-center mb-6">
-        <h2 className="text-lg font-bold text-white flex items-center gap-2">
-          <FaMapMarkerAlt className="text-amber-500" /> 1. SHIPPING ADDRESS
+        <h2 className="text-lg font-heading font-bold text-text-main flex items-center gap-2">
+          <FaMapMarkerAlt className="text-brand-primary" /> 1. SHIPPING ADDRESS
         </h2>
         {!showAddressForm && (
           <button
             onClick={() => setShowAddressForm(true)}
-            className="text-xs bg-amber-500/10 text-amber-500 hover:bg-amber-500/20 px-3.5 py-1.5 rounded-xl font-bold flex items-center gap-1.5 transition"
+            className="text-xs bg-brand-primary/10 text-brand-primary hover:bg-brand-primary/20 px-3.5 py-1.5 rounded-xl font-bold flex items-center gap-1.5 transition cursor-pointer"
           >
             <FaPlus /> Add New
           </button>
@@ -65,8 +65,8 @@ export const AddressSection: React.FC<AddressSectionProps> = ({
       </div>
 
       {showAddressForm ? (
-        <form onSubmit={handleAddAddress} className="space-y-4 bg-black/20 p-5 rounded-2xl border border-white/5">
-          <h3 className="text-sm font-bold text-white uppercase tracking-wider">New Shipping Details</h3>
+        <form onSubmit={handleAddAddress} className="space-y-4 bg-bg-input p-5 rounded-2xl border border-border-subtle">
+          <h3 className="text-sm font-heading font-bold text-text-main uppercase tracking-wider">New Shipping Details</h3>
           
           {addressError && <p className="text-xs font-bold text-red-500">{addressError}</p>}
 
@@ -77,7 +77,7 @@ export const AddressSection: React.FC<AddressSectionProps> = ({
               value={addrName}
               onChange={(e) => setAddrName(e.target.value)}
               required
-              className="bg-[#0b0c10] text-sm text-gray-200 px-4 py-2.5 rounded-xl border border-white/5 focus:outline-none focus:border-amber-500"
+              className="bg-bg-base text-sm text-text-main px-4 py-2.5 rounded-xl border border-border-subtle focus:outline-none focus:border-brand-primary"
             />
             <input
               type="text"
@@ -85,7 +85,7 @@ export const AddressSection: React.FC<AddressSectionProps> = ({
               value={addrPhone}
               onChange={(e) => setAddrPhone(e.target.value)}
               required
-              className="bg-[#0b0c10] text-sm text-gray-200 px-4 py-2.5 rounded-xl border border-white/5 focus:outline-none focus:border-amber-500"
+              className="bg-bg-base text-sm text-text-main px-4 py-2.5 rounded-xl border border-border-subtle focus:outline-none focus:border-brand-primary"
             />
           </div>
 
@@ -96,7 +96,7 @@ export const AddressSection: React.FC<AddressSectionProps> = ({
               value={addrHouseName}
               onChange={(e) => setAddrHouseName(e.target.value)}
               required
-              className="bg-[#0b0c10] text-sm text-gray-200 px-4 py-2.5 rounded-xl border border-white/5 focus:outline-none focus:border-amber-500"
+              className="bg-bg-base text-sm text-text-main px-4 py-2.5 rounded-xl border border-border-subtle focus:outline-none focus:border-brand-primary"
             />
             <input
               type="text"
@@ -104,7 +104,7 @@ export const AddressSection: React.FC<AddressSectionProps> = ({
               value={addrStreet}
               onChange={(e) => setAddrStreet(e.target.value)}
               required
-              className="bg-[#0b0c10] text-sm text-gray-200 px-4 py-2.5 rounded-xl border border-white/5 focus:outline-none focus:border-amber-500"
+              className="bg-bg-base text-sm text-text-main px-4 py-2.5 rounded-xl border border-border-subtle focus:outline-none focus:border-brand-primary"
             />
           </div>
 
@@ -115,7 +115,7 @@ export const AddressSection: React.FC<AddressSectionProps> = ({
               value={addrCity}
               onChange={(e) => setAddrCity(e.target.value)}
               required
-              className="bg-[#0b0c10] text-sm text-gray-200 px-4 py-2.5 rounded-xl border border-white/5 focus:outline-none focus:border-amber-500"
+              className="bg-bg-base text-sm text-text-main px-4 py-2.5 rounded-xl border border-border-subtle focus:outline-none focus:border-brand-primary"
             />
             <input
               type="text"
@@ -123,7 +123,7 @@ export const AddressSection: React.FC<AddressSectionProps> = ({
               value={addrState}
               onChange={(e) => setAddrState(e.target.value)}
               required
-              className="bg-[#0b0c10] text-sm text-gray-200 px-4 py-2.5 rounded-xl border border-white/5 focus:outline-none focus:border-amber-500"
+              className="bg-bg-base text-sm text-text-main px-4 py-2.5 rounded-xl border border-border-subtle focus:outline-none focus:border-brand-primary"
             />
             <input
               type="text"
@@ -131,29 +131,29 @@ export const AddressSection: React.FC<AddressSectionProps> = ({
               value={addrPin}
               onChange={(e) => setAddrPin(e.target.value)}
               required
-              className="bg-[#0b0c10] text-sm text-gray-200 px-4 py-2.5 rounded-xl border border-white/5 focus:outline-none focus:border-amber-500"
+              className="bg-bg-base text-sm text-text-main px-4 py-2.5 rounded-xl border border-border-subtle focus:outline-none focus:border-brand-primary"
             />
           </div>
 
           <div className="flex gap-3 pt-2">
             <button
               type="submit"
-              className="px-6 py-2.5 bg-amber-500 text-black font-extrabold text-xs rounded-xl"
+              className="px-6 py-2.5 bg-brand-primary text-black font-extrabold text-xs rounded-xl hover:bg-brand-hover transition"
             >
               Save Address
             </button>
             <button
               type="button"
               onClick={() => setShowAddressForm(false)}
-              className="px-6 py-2.5 bg-white/5 text-gray-400 font-bold text-xs rounded-xl"
+              className="px-6 py-2.5 bg-bg-card text-text-muted font-bold text-xs rounded-xl border border-border-subtle"
             >
               Cancel
             </button>
           </div>
         </form>
       ) : addresses.length === 0 ? (
-        <div className="p-8 text-center bg-black/20 rounded-2xl border border-white/5 border-dashed">
-          <p className="text-sm text-gray-500">No saved addresses found. Please add a shipping address to proceed.</p>
+        <div className="p-8 text-center bg-bg-input rounded-2xl border border-border-subtle border-dashed">
+          <p className="text-sm text-text-muted">No saved addresses found. Please add a shipping address to proceed.</p>
         </div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -163,23 +163,23 @@ export const AddressSection: React.FC<AddressSectionProps> = ({
               onClick={() => setSelectedAddressId(addr.id)}
               className={`p-4 rounded-2xl border cursor-pointer transition-all flex flex-col justify-between relative ${
                 selectedAddressId === addr.id
-                  ? "bg-amber-500/5 border-amber-500"
-                  : "bg-black/20 border-white/5 hover:border-white/20"
+                  ? "bg-brand-primary/10 border-brand-primary"
+                  : "bg-bg-input border-border-subtle hover:border-text-muted"
               }`}
             >
               {selectedAddressId === addr.id && (
-                <FaCheckCircle className="absolute top-4 right-4 text-amber-500 text-lg" />
+                <FaCheckCircle className="absolute top-4 right-4 text-brand-primary text-lg" />
               )}
               <div>
-                <p className="text-sm font-bold text-white">{addr.name}</p>
-                <p className="text-xs text-gray-400 mt-2">
+                <p className="text-sm font-bold text-text-main">{addr.name}</p>
+                <p className="text-xs text-text-muted mt-2">
                   {addr.house_name}, {addr.street}
                 </p>
-                <p className="text-xs text-gray-400">
+                <p className="text-xs text-text-muted">
                   {addr.city}, {addr.state} - {addr.pin_code}
                 </p>
               </div>
-              <p className="text-[10px] text-gray-500 font-semibold mt-4">📞 {addr.phone}</p>
+              <p className="text-[10px] text-text-muted font-semibold mt-4">📞 {addr.phone}</p>
             </div>
           ))}
         </div>
